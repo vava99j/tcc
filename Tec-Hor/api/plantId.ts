@@ -11,7 +11,7 @@ export async function identificarPlanta(base64Image: string) {
       {
         images: [base64Image],
         plant_language: 'pt',
-        plant_details: ['common_names', 'watering', 'sunlight'],
+        plant_details: ['common_names', 'scientific_name'],
       },
       {
         headers: {

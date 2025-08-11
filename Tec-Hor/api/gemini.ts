@@ -1,6 +1,6 @@
 
   export async function buscarCuidadosGemini(nomeCientifico: string) {
-    const apiKey = 'AIzaSyBS5Sldn2k_hOvcI2lvw7p-qC1LJoZW3iwz'; // Troque pela sua API KEY real e guarde em local seguro
+    const apiKey = 'AIzaSyBS5Sldn2k_hOvcI2lvw7p-qC1LJoZW3iwz';
 
     const prompt = `
     Me dê os cuidados da planta '${nomeCientifico}' com os seguintes campos:

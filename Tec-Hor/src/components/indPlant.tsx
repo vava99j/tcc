@@ -1,12 +1,13 @@
 // PlantIdentifierScreen.tsx
-
+import { styles } from '@/style/style';
 import React, { useState } from 'react';
-import { View, Text, Button, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, Button, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { identificarPlanta } from '../../api/plantId';
 import { buscarCuidadosGemini } from '../../api/gemini'; // Importe a função corretamente
 
-export default function PlantIdentifierScreen() {
+export default function 
+() {
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -30,20 +31,23 @@ export default function PlantIdentifierScreen() {
         // Identifica a planta com Plant.id
         const resposta = await identificarPlanta(base64!);
         setResult(resposta);
-
+        
         // Extrai o nome científico
-        const nome = resposta?.suggestions?.[0]?.plant_name;
-        console.log('Planta identificada:', nome);
+       const nomeC = resposta?.suggestions?.[0]?.plant_name;
+        console.log('Planta identificada:', nomeC);
 
-        // Se tiver nome, busca os cuidados no Gemini
-        if (nome) {
-          const dados = await buscarCuidadosGemini(nome);
-          setCuidados(dados);
-        }
+        // Busca cuidados com Gemini
+        const cuidadosResposta = await buscarCuidadosGemini(nomeC!);
+        setCuidados(cuidadosResposta);
+
+
+
+      
       } catch (error) {
         alert('Erro ao identificar a planta ou buscar cuidados.');
         console.log(error);
       }
+      
 
       setLoading(false);
     }
@@ -51,7 +55,7 @@ export default function PlantIdentifierScreen() {
 
   return (
     <ScrollView contentContainerStyle={{ padding: 20 }}>
-      <Button title="Escolher imagem" onPress={escolherImagem} />
+      <Pressable onPress={escolherImagem}> <Text style={styles.button}>ESCOLHER IMAGEM</Text></Pressable>
 
       {image && (
         <Image
@@ -67,18 +71,13 @@ export default function PlantIdentifierScreen() {
           <Text style={{ fontWeight: 'bold', fontSize: 18 }}>
             🌿 Planta Identificada:
           </Text>
-          <Text>Nome científico: {result?.suggestions?.[0]?.plant_name}</Text>
+          <Text>Nome científico: {result.suggestions[0].plant_name}</Text>
         </View>
       )}
 
       {cuidados && (
         <View style={{ marginTop: 20 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>🌱 Cuidados da planta:</Text>
-          <Text>💧 Rega: {cuidados.rega}</Text>
-          <Text>🌞 Sol: {cuidados.sol}</Text>
-          <Text>💨 Ventilação: {cuidados.ventilacao}</Text>
-          <Text>🌱 Solo: {cuidados.solo}</Text>
-          <Text>✂️ Poda: {cuidados.poda}</Text>
+    
         </View>
       )}
     </ScrollView>

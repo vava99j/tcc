@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { styles } from '@/style/style';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
 import { Text, View } from '@/components/Themed';
@@ -14,27 +14,3 @@ export default function TabTwoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white'
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: "green"
-  },
-    planta: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: "green",
-    borderColor: "green",
-    borderWidth: 1,
-    borderRadius: 10,
-    height: "80%",
-    width: "98%",
-    alignItems: 'center',
-  },
-
-});
