@@ -3,8 +3,7 @@ import { styles } from '@/style/style';
 import React, { useState } from 'react';
 import { View, Text, Button, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { identificarPlanta } from '../../api/plantId';
-import { buscarCuidadosGemini } from '../../api/gemini'; // Importe a função corretamente
+import { identificarPlanta } from '../../api/plantId';// Importe a função corretamente
 
 export default function 
 () {
@@ -37,8 +36,7 @@ export default function
         console.log('Planta identificada:', nomeC);
 
         // Busca cuidados com Gemini
-        const cuidadosResposta = await buscarCuidadosGemini(nomeC!);
-        setCuidados(cuidadosResposta);
+     
 
 
 
@@ -75,11 +73,7 @@ export default function
         </View>
       )}
 
-      {cuidados && (
-        <View style={{ marginTop: 20 }}>
-    
-        </View>
-      )}
+   
     </ScrollView>
   );
 }
