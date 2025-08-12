@@ -37,7 +37,8 @@ export default function
         console.log('Planta identificada:', nomeC);
 
         // Busca cuidados com Gemini
-     await gemini(nomeC);
+       const respostagen= await gemini(nomeC);
+       setCuidados(respostagen);
 
 
 
@@ -53,7 +54,7 @@ export default function
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20 }}>
+    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white'}}>
       <Pressable onPress={escolherImagem}> <Text style={styles.button}>ESCOLHER IMAGEM</Text></Pressable>
 
       {image && (
@@ -63,7 +64,7 @@ export default function
         />
       )}
 
-      {loading && <ActivityIndicator size="large" color="green" />}
+      {loading && <ActivityIndicator  color="green" />}
 
       {result && (
         <View style={{ marginTop: 20 }}>
@@ -71,6 +72,11 @@ export default function
             🌿 Planta Identificada:
           </Text>
           <Text>Nome científico: {result.suggestions[0].plant_name}</Text>
+        </View>
+      )}
+      {cuidados && (
+        <View style={{ marginTop: 20 }}>
+        <Text>Cuidados: {cuidados}</Text>
         </View>
       )}
 

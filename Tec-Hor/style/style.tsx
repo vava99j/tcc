@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     color: "green"
   },
   planta: {
+    backgroundColor: "white",
     fontSize: 20,
     fontWeight: 'bold',
     color: "green",
