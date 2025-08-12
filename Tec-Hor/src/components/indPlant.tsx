@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { identificarPlanta } from '../../api/plantId';// Importe a função corretamente
+import { gemini } from '@/api/gemini';
 
 export default function 
 () {
@@ -36,7 +37,7 @@ export default function
         console.log('Planta identificada:', nomeC);
 
         // Busca cuidados com Gemini
-     
+     await gemini(nomeC);
 
 
 
