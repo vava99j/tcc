@@ -1,6 +1,6 @@
-import { styles } from '@/style/style';
+import { styles } from '@/src/style/style';
 import { Text, View , Pressable } from 'react-native';
-import DataPlant from '../../src/components/dataPlant';
+import DataPlant from '../../src/screen/dataPlant';
 
 export default function TabOneScreen() {
   return (

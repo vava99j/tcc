@@ -1,11 +1,11 @@
 // PlantIdentifierScreen.tsx
-import { styles } from '@/style/style';
+import { styles } from '@/src/style/style';
 import React, { useState } from 'react';
 import { View, Text, Button, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { identificarPlanta } from '../../api/plantId';// Importe a função corretamente
-import { gemini } from '@/api/gemini';
-
+import { identificarPlanta } from '../api/plantId';// Importe a função corretamente
+import { gemini } from '@/src/api/gemini';
+import { transformarEmJSON } from '../services/convertJson';
 export default function 
 () {
   const [image, setImage] = useState<string | null>(null);
@@ -39,6 +39,9 @@ export default function
         // Busca cuidados com Gemini
        const respostagen= await gemini(nomeC);
        setCuidados(respostagen);
+
+       // chama a converçao para json
+       
 
 
 

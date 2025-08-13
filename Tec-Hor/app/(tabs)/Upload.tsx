@@ -1,8 +1,8 @@
-import { styles } from '@/style/style';
+import { styles } from '@/src/style/style';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
 import { Text, View } from '@/components/Themed';
-import  IndPlant  from '../../src/components/indPlant';
+import  IndPlant  from '../../src/screen/indPlant';
 
 export default function TabTwoScreen() {
   return (
