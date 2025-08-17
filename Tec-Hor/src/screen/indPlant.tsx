@@ -5,7 +5,6 @@ import { View, Text, Button, Image, ScrollView, ActivityIndicator  , Pressable} 
 import * as ImagePicker from 'expo-image-picker';
 import { identificarPlanta } from '../api/plantId';// Importe a função corretamente
 import { gemini } from '@/src/api/gemini';
-import { transformarEmJSON } from '../services/convertJson';
 export default function 
 () {
   const [image, setImage] = useState<string | null>(null);
@@ -39,13 +38,8 @@ export default function
         // Busca cuidados com Gemini
        const respostagen= await gemini(nomeC);
        setCuidados(respostagen);
+     
 
-       // chama a converçao para json
-       
-
-
-
-      
       } catch (error) {
         alert('Erro ao identificar a planta ou buscar cuidados.');
         console.log(error);

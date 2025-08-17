@@ -6,10 +6,17 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white'
   },
+  scroll:{
+    flex: 1,
+    backgroundColor: 'white'
+  },
   title: {
     fontSize: 50,
     fontWeight: 'bold',
     color: "green"
+  },
+  txt:{
+    padding: 10
   },
   planta: {
     backgroundColor: "white",
