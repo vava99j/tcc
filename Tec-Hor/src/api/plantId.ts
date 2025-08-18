@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = "lgtQ0VIXorT83ORtW5uG5r7HnyPtiOyzLwtO3ClkOIaNJATM9J";
+const API_KEY = "jAEIDdSs8VxsmtuhrRr8aubiEO1QfofS432YP0X4305psxLbTe";
 const BASE_URL = 'https://api.plant.id/v2/identify';
 
 
