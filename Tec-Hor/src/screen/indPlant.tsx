@@ -36,7 +36,7 @@ export default function
         console.log('Planta identificada:', nomeC);
 
         // Busca cuidados com Gemini
-       const respostagen= await gemini(nomeC);
+       const {respostagen}= await gemini(nomeC);
        setCuidados(respostagen);
      
 

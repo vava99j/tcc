@@ -1,7 +1,7 @@
 export default async function horarios(json: string) {
   const obj = JSON.parse(json);
 
-  let hor: any = {
+  let horarios: any = {
     agua: 0,
     sol: 0,
     ventilacao: 0,
@@ -11,46 +11,50 @@ export default async function horarios(json: string) {
 
   // Água
   switch (obj.agua) {
-    case 'muito alta': hor.agua = 12; break;
-    case 'alta': hor.agua = 24; break;
-    case 'media': hor.agua = 60; break;
-    case 'baixa': hor.agua = 168; break;
-    case 'muito baixa': hor.agua = 336; break;
-    case 'nula': hor.agua = 0; break;
+    case 'muito alta': horarios.agua = 12; break;
+    case 'alta': horarios.agua = 24; break;
+    case 'media': horarios.agua = 60; break;
+    case 'baixa': horarios.agua = 168; break;
+    case 'muito baixa': horarios.agua = 336; break;
+    case 'nula': horarios.agua = 0; break;
   }
 
   // Sol
   switch (obj.sol) {
-    case 'muito alta': hor.sol = 12; break;
-    case 'alta': hor.sol = 9; break;
-    case 'media': hor.sol = 6; break;
-    case 'baixa': hor.sol = 3; break;
-    case 'muito baixa': hor.sol = 2; break;
-    case 'nula': hor.sol = 0; break;
+    case 'muito alta': horarios.sol = 12; break;
+    case 'alta': horarios.sol = 9; break;
+    case 'media': horarios.sol = 6; break;
+    case 'baixa': horarios.sol = 3; break;
+    case 'muito baixa': horarios.sol = 2; break;
+    case 'nula': horarios.sol = 0; break;
   }
 
   // Ventilação
   switch (obj.ventilacao) {
-    case 'muito alta': hor.ventilacao = 14; break;
-    case 'alta': hor.ventilacao = 10; break;
-    case 'media': hor.ventilacao = 6; break;
-    case 'baixa': hor.ventilacao = 3; break;
-    case 'muito baixa': hor.ventilacao = 1; break;
-    case 'nula': hor.ventilacao = 0; break;
+    case 'muito alta': horarios.ventilacao = 14; break;
+    case 'alta': horarios.ventilacao = 10; break;
+    case 'media': horarios.ventilacao = 6; break;
+    case 'baixa': horarios.ventilacao = 3; break;
+    case 'muito baixa': horarios.ventilacao = 1; break;
+    case 'nula': horarios.ventilacao = 0; break;
   }
 
   // Irrigação do solo
   switch (obj.irrigacao_solo) {
-    case 'muito alta': hor.irrigacao_solo = 24; break;
-    case 'alta': hor.irrigacao_solo = 18; break;
-    case 'media': hor.irrigacao_solo = 12; break;
-    case 'baixa': hor.irrigacao_solo = 6; break;
-    case 'muito baixa': hor.irrigacao_solo = 2; break;
-    case 'nula': hor.irrigacao_solo = 0; break;
+    case 'muito alta': horarios.irrigacao_solo = 24; break;
+    case 'alta': horarios.irrigacao_solo = 18; break;
+    case 'media': horarios.irrigacao_solo = 12; break;
+    case 'baixa': horarios.irrigacao_solo = 6; break;
+    case 'muito baixa': horarios.irrigacao_solo = 2; break;
+    case 'nula': horarios.irrigacao_solo = 0; break;
   }
 
  
-
-  console.log(hor);
+  console.log(horarios);
+  let hor = 
+    "água: " + horarios.agua + "h, " +
+    "sol: " + horarios.sol + "h, " +
+    "ventilação: " + horarios.ventilacao + "h, " +
+    "irrigação do solo: " + horarios.irrigacao_solo + "h, " 
   return hor;
 }

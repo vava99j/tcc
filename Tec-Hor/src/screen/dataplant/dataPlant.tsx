@@ -1,14 +1,14 @@
-// No arquivo DataPlant.tsx
-
+import { useStore } from '../../services/zustand'; // Caminho correto
 import { View, Text } from 'react-native';
 
-// O componente DataPlant deve receber um objeto de propriedades (props).
-export default async function DataPlant({ hor }: { hor: string }) {
-  console.log(` hooorr:${hor}`);
+export default async function DataPlant() {
+  const hor = useStore((state) => state.hor); // Correto
+
+  console.log(`hooor: ${hor}`);
+
   return (
     <View>
-      {/* Agora você pode usar a propriedade 'hor' aqui */}
-      <Text>{hor}</Text> 
+      <Text>{hor}</Text>
     </View>
   );
 }
