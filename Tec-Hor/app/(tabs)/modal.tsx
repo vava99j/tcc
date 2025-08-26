@@ -6,6 +6,7 @@ import { styles } from '@/src/style/style';
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.planta}>
     <ScrollView style={styles.scroll}>
       <Text style={styles.title}> Instrução </Text>
         <Text style={styles.txt}>
@@ -37,6 +38,9 @@ export default function ModalScreen() {
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </ScrollView>
+    
+    </View>
+    <Text style={styles.title}>  OBRIGADO PELA ATENÇÃO  </Text>
     </View>
   );
 }

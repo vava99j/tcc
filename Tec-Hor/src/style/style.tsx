@@ -29,6 +29,19 @@ export const styles = StyleSheet.create({
     height: "80%",
     width: "98%",
     alignItems: 'center',
+    
+  },
+   dataPlanta: {
+    backgroundColor: "white",
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: "green",
+    borderColor: "green",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    
   },
   button:{
     backgroundColor: 'green',

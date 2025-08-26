@@ -1,4 +1,4 @@
-export default async function horarios(json: string) {
+export default async function horarios(json: string, nome: string) {
   const obj = JSON.parse(json);
 
   let horarios: any = {
@@ -52,9 +52,10 @@ export default async function horarios(json: string) {
  
   console.log(horarios);
   let hor = 
-    "água: " + horarios.agua + "h, " +
-    "sol: " + horarios.sol + "h, " +
-    "ventilação: " + horarios.ventilacao + "h, " +
-    "irrigação do solo: " + horarios.irrigacao_solo + "h, " 
+   "Horarios da planta: "+ nome+ "\n"+
+    "água: " + horarios.agua + "h,\n" +
+    "sol: " + horarios.sol + "h,\n" +
+    "ventilação: " + horarios.ventilacao + "h,\n" +
+    "irrigação do solo: " + horarios.irrigacao_solo + "h.\n" 
   return hor;
 }

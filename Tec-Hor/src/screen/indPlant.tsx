@@ -1,16 +1,19 @@
 // PlantIdentifierScreen.tsx
 import { styles } from '@/src/style/style';
 import React, { useState } from 'react';
-import { View, Text, Button, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
+import { View, Text, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { identificarPlanta } from '../api/plantId';// Importe a função corretamente
 import { gemini } from '@/src/api/gemini';
+import { useFot} from '../services/fotoZustand';
+
 export default function 
 () {
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [cuidados, setCuidados] = useState<any>(null);
+  const {setFoto} = useFot.getState()
 
   const escolherImagem = async () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -22,6 +25,7 @@ export default function
       const base64 = pickerResult.assets[0].base64;
       const uri = pickerResult.assets[0].uri;
       setImage(uri);
+      setFoto(uri)
       setLoading(true);
       setResult(null);
       setCuidados(null);
