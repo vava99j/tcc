@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
+  
    dataPlanta: {
     backgroundColor: "white",
     fontSize: 20,
@@ -56,6 +57,15 @@ export const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  input: {
+    height: 35,
+    width: "80%",
+    margin: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "green",
+    
   },
 
 });
