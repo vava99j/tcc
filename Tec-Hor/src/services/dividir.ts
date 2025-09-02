@@ -1,7 +1,7 @@
 import dataPlant from "../screen/dataPlant";
 import arduino from "./ard";
 import horarios from "./horarios";
-import { useStore } from "./zustand";
+import { useStore } from "./zustand/HorZustand";
 
 export default async function dividir(input:string, nome: string) {
   const {setHor} = useStore.getState()

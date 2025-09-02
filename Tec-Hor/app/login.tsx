@@ -1,117 +1,111 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
-import { styles } from '@/src/style/style';
-// URL base da sua API
-// Para testes no seu computador, use o seu IP de rede local
-// ou a URL do Railway após a implantação
-const API_URL = 'http://192.168.0.110:3000'; // Exemplo: 'http://192.168.1.5:3000'
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
+import { useRouter } from "expo-router";
+import { styles } from "@/src/style/style";
+
+// 👉 Troque pelo IP da sua máquina ou URL do Railway
+const API_URL = "http://localhost:17928";
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [telefone, setTelefone] = useState('');
-  const [senha, setSenha] = useState('');
-  const [usuarioIdParaExcluir, setUsuarioIdParaExcluir] = useState('');
+  const [telefone, setTelefone] = useState("");
+  const [senha, setSenha] = useState("");
+  const [visible, setVisible] = useState(true);    // formulário visível
+  const [visible2, setVisible2] = useState(false); // segundo view escondido
 
-  // Função para navegar para a tela principal
-  async function navigateToHome() {
+  // Navegar para a Home
+  function navigateToHome() {
     router.push("/(tabs)");
   }
 
-  // Função para lidar com o cadastro de um novo usuário
+  // Cadastrar usuário
   async function handleCadastro() {
-    try {
-      if (!telefone || !senha) {
-        Alert.alert("Erro", "Por favor, preencha todos os campos.");
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/usuarios`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ telefone, senha }),
-       
-      });
-      const data = await response.json();
-
-      if (response.status === 201) { // Status 201 geralmente indica que algo foi criado
-        Alert.alert("Sucesso", "Usuário cadastrado!");
-        // Opcional: navegar para outra tela ou limpar os campos
-      } else {
-        Alert.alert("Erro", data.error || "Ocorreu um erro no cadastro.");
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-      Alert.alert("Erro de Conexão", "Não foi possível conectar ao servidor.");
+    if (!telefone || !senha) {
+      Alert.alert("Erro", "Preencha todos os campos");
+      return;
     }
-  }
 
-  // Função para lidar com a exclusão de um usuário
-  async function handleExclusao() {
     try {
-      if (!usuarioIdParaExcluir) {
-        Alert.alert("Erro", "Por favor, digite o ID do usuário a ser excluído.");
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/usuarios/${usuarioIdParaExcluir}`, {
-        method: 'DELETE',
+      const res = await fetch(`${API_URL}/usuarios`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          telefone: telefone,
+          senha_hash: senha,
+        }),
       });
 
-      if (response.status === 200) {
-        Alert.alert("Sucesso", `Usuário com ID ${usuarioIdParaExcluir} excluído.`);
-      } else {
-        const data = await response.json();
-        Alert.alert("Erro", data.error || "Usuário não encontrado ou erro na exclusão.");
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-      Alert.alert("Erro de Conexão", "Não foi possível conectar ao servidor.");
+      if (!res.ok) throw new Error("Erro ao cadastrar usuário");
+      // Mostra alerta de sucesso e troca de view após clicar em OK
+      Alert.alert(
+        "Sucesso!",
+        "Usuário cadastrado com sucesso.",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              setVisible(false);  // esconde formulário
+              setVisible2(true);  // mostra o segundo view
+            },
+          },
+        ],
+        { cancelable: false } // evita que o usuário feche o alerta sem clicar
+      );
+
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Erro", "Não foi possível cadastrar o usuário");
     }
   }
 
   return (
+   
     <View style={styles.container}>
+       <View style={styles.separator}/>
+      {/* Voltar */}
       <TouchableOpacity onPress={navigateToHome}>
-        <Text>◀ voltar</Text>
+        <Text>◀ Voltar</Text>
       </TouchableOpacity>
-      
-      <View style={styles.planta}>
-        <Text>Telefone</Text>
-        <TextInput 
-          style={styles.input} 
-          keyboardType='numeric' 
-          value={telefone} 
-          onChangeText={setTelefone}
-        />
-        <Text>Senha</Text>
-        <TextInput 
-          style={styles.input} 
-          secureTextEntry
-          value={senha} 
-          onChangeText={setSenha}
-        />
-        <TouchableOpacity onPress={handleCadastro}>
-          <Text style={styles.button}>Cadastrar</Text>
-        </TouchableOpacity>
-      </View>
+
+      {/* Formulário de cadastro */}
+      {visible && 
+        <View style={styles.planta}>
+          <Text>Telefone</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={telefone}
+            onChangeText={setTelefone}
+          />
+          <Text>Senha</Text>
+          <TextInput
+            style={styles.input}
+            secureTextEntry
+            value={senha}
+            onChangeText={setSenha}
+          />
+          <TouchableOpacity onPress={handleCadastro}>
+            <Text style={styles.button}>Cadastrar</Text>
+          </TouchableOpacity>
+        </View>
+      }
+
+      {/* Segundo View após cadastro */}
+      {visible2 && 
+        <View style={styles.planta}>
+          <Text>Cadastro concluído! 🎉</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setVisible2(false);
+              setVisible(true); // opcional: voltar ao formulário
+            }}
+          >
+            <Text style={styles.button}>LOGOUT</Text>
+          </TouchableOpacity>
+        </View>
+      }
 
       <View style={styles.separator}></View>
-
-      <View style={styles.planta}>
-        <Text>ID do Usuário para Excluir</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType='numeric'
-          value={usuarioIdParaExcluir}
-          onChangeText={setUsuarioIdParaExcluir}
-        />
-        <TouchableOpacity onPress={handleExclusao}>
-          <Text style={styles.button}>Excluir Usuário</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }

@@ -5,7 +5,7 @@ import { View, Text, Image, ScrollView, ActivityIndicator  , Pressable} from 're
 import * as ImagePicker from 'expo-image-picker';
 import { identificarPlanta } from '../api/plantId';// Importe a função corretamente
 import { gemini } from '@/src/api/gemini';
-import { useFot} from '../services/fotoZustand';
+import { useFot} from '../services/zustand/FotZustand';
 
 export default function 
 () {

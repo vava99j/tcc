@@ -1,6 +1,6 @@
 import React from 'react';
-import { useStore } from '../services/zustand';
-import { useFot } from '@/src/services/fotoZustand';
+import { useStore } from '../services/zustand/HorZustand';
+import { useFot } from '@/src/services/zustand/FotZustand';
 import { View, Text, Image , ScrollView, Pressable} from 'react-native';
 import { styles } from '@/src/style/style';
 
