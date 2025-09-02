@@ -58,28 +58,29 @@ export default function
    const hor = useStore((state) => state.hor);
       const fot = useFot((state) => state.foto);
       const idUser = useId((state) => state.id)  
-  if(!hor || !fot  ) handleCadPlant()
- async function handleCadPlant() {
-      try {
-           const res = await fetch(`${API_URL}/plantas`, {
-             method: "POST",
-             headers: { "Content-Type": "application/json" },
-             body: JSON.stringify({
-              usuario_id: idUser,
-               horarios: hor,
-               foto_url: fot,
-             }),
-           });
-     
-           if (!res.ok) throw new Error("Erro ao cadastrar usuário");
-           // Mostra alerta de sucesso e troca de view após clicar em OK
-          
-     
-         } catch (err) {
-           console.error(err);
-           Alert.alert("Erro", "Não foi possível cadastrar a planta");
-         }
+  if(idUser && hor && fot  ){ handleCadPlant}
+async function handleCadPlant() {
+  try {
+    const res = await fetch(`${API_URL}/plantas`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        usuario_id: idUser,
+        horarios: hor,
+        foto_url: fot,
+      }),
+    });
+
+    if (!res.ok) throw new Error("Erro ao cadastrar a planta");
+
+    Alert.alert("Sucesso", "Planta cadastrada com sucesso!");
+  } catch (err) {
+    console.error(err);
+    Alert.alert("Erro", "Não foi possível cadastrar a planta");
   }
+}
+
+  
   return (
     <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white'}}>
       <Pressable onPress={escolherImagem}> <Text style={styles.button}>ESCOLHER IMAGEM</Text></Pressable>
@@ -106,6 +107,13 @@ export default function
         <Text>Cuidados: {cuidados}</Text>
         </View>
       )}
+
+      {idUser && hor && fot && (
+  <Pressable onPress={handleCadPlant}>
+    <Text style={styles.button}>SALVAR PLANTA</Text>
+  </Pressable>
+)}
+
 
    
     </ScrollView>
