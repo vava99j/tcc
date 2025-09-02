@@ -1,14 +1,16 @@
 // PlantIdentifierScreen.tsx
 import { styles } from '@/src/style/style';
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, ActivityIndicator  , Pressable} from 'react-native';
+import { View, Text, Image, ScrollView, ActivityIndicator  , Pressable, Alert} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { identificarPlanta } from '../api/plantId';// Importe a função corretamente
 import { gemini } from '@/src/api/gemini';
 import { useFot} from '../services/zustand/FotZustand';
-
+import { useStore } from '../services/zustand/HorZustand';
+import { useId } from '../services/zustand/UserIdZustand'
 export default function 
 () {
+  const API_URL = "http://localhost:17928";
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -53,7 +55,31 @@ export default function
       setLoading(false);
     }
   };
-
+   const hor = useStore((state) => state.hor);
+      const fot = useFot((state) => state.foto);
+      const idUser = useId((state) => state.id)  
+  if(!hor || !fot  ) handleCadPlant()
+ async function handleCadPlant() {
+      try {
+           const res = await fetch(`${API_URL}/plantas`, {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify({
+              usuario_id: idUser,
+               horarios: hor,
+               foto_url: fot,
+             }),
+           });
+     
+           if (!res.ok) throw new Error("Erro ao cadastrar usuário");
+           // Mostra alerta de sucesso e troca de view após clicar em OK
+          
+     
+         } catch (err) {
+           console.error(err);
+           Alert.alert("Erro", "Não foi possível cadastrar a planta");
+         }
+  }
   return (
     <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white'}}>
       <Pressable onPress={escolherImagem}> <Text style={styles.button}>ESCOLHER IMAGEM</Text></Pressable>

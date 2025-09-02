@@ -7,7 +7,7 @@ type IdUser = {
 
 
 
-export const useStore = create<IdUser>((set) => ({
+export const useId = create<IdUser>((set) => ({
   id: '',
   setId: (valor: string) => set(() => ({ id: valor })),
 }));

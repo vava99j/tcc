@@ -11,7 +11,10 @@ export default function DataPlant() {
 
   console.log(`hooor: ${hor}`);
   console.log(`foto URI: ${fot}`);
-if(hor == '' && fot == '')return(<View><Text style={styles.txt}>Nenhuma Planta cadastrada😢🌱</Text> </View>)
+if(hor == '' && fot == '')
+ 
+  {return(<View><Text style={styles.txt}>Nenhuma Planta cadastrada😢🌱</Text> </View>)
+}
   return (
       <ScrollView>
         <View style={styles.dataPlanta}>

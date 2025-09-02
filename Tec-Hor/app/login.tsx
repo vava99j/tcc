@@ -8,8 +8,8 @@ const API_URL = "http://localhost:17928";
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [telefone, setTelefone] = useState("");
-  const [senha, setSenha] = useState("");
+  const [Criartelefone, setTelefone] = useState("");
+  const [Criarsenha, setSenha] = useState("");
   const [visible, setVisible] = useState(true);    // formulário visível
   const [visible2, setVisible2] = useState(false); // segundo view escondido
 
@@ -20,44 +20,31 @@ export default function LoginScreen() {
 
   // Cadastrar usuário
   async function handleCadastro() {
-    if (!telefone || !senha) {
+    if (!Criartelefone || !Criarsenha) {
       Alert.alert("Erro", "Preencha todos os campos");
       return;
     }
-
     try {
       const res = await fetch(`${API_URL}/usuarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          telefone: telefone,
-          senha_hash: senha,
-        }),
-      });
-
+          telefone: Criartelefone,
+          senha_hash: Criarsenha,
+        }),});
       if (!res.ok) throw new Error("Erro ao cadastrar usuário");
-      // Mostra alerta de sucesso e troca de view após clicar em OK
-      Alert.alert(
-        "Sucesso!",
-        "Usuário cadastrado com sucesso.",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              setVisible(false);  // esconde formulário
-              setVisible2(true);  // mostra o segundo view
-            },
-          },
-        ],
-        { cancelable: false } // evita que o usuário feche o alerta sem clicar
-      );
-
     } catch (err) {
       console.error(err);
       Alert.alert("Erro", "Não foi possível cadastrar o usuário");
     }
+    setTelefone('')
+    setSenha('')
+      setVisible(false);  // esconde formulário
+              setVisible2(true); 
   }
-
+async function handleLogin() {
+  
+}
   return (
    
     <View style={styles.container}>
@@ -74,14 +61,14 @@ export default function LoginScreen() {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={telefone}
+            value={Criartelefone}
             onChangeText={setTelefone}
           />
           <Text>Senha</Text>
           <TextInput
             style={styles.input}
             secureTextEntry
-            value={senha}
+            value={Criarsenha}
             onChangeText={setSenha}
           />
           <TouchableOpacity onPress={handleCadastro}>
@@ -93,7 +80,9 @@ export default function LoginScreen() {
       {/* Segundo View após cadastro */}
       {visible2 && 
         <View style={styles.planta}>
-          <Text>Cadastro concluído! 🎉</Text>
+          <View style={styles.separator}></View>
+          <View style={styles.separator}></View>
+          <View style={styles.separator}></View>
           <TouchableOpacity
             onPress={() => {
               setVisible2(false);
