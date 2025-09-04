@@ -53,6 +53,17 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center'
   },
+   button2:{
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    fontFamily: 'bold',
+    color: 'green',
+    borderColor:'green',
+    borderWidth: 1,
+    fontSize: 15,
+    textAlign: 'center'
+  },
   separator: {
     marginVertical: 30,
     height: 1,

@@ -1,21 +1,18 @@
 import React from 'react';
-import { useStore } from '../services/zustand/HorZustand';
-import { useFot } from '@/src/services/zustand/FotZustand';
+import { useId } from '../services/zustand/UserIdZustand';
 import { View, Text, Image , ScrollView, Pressable} from 'react-native';
 import { styles } from '@/src/style/style';
 
 
 export default function DataPlant() {
-  const hor = useStore((state) => state.hor);
-  const fot = useFot((state) => state.foto);
+  const idUser = useId((state) => state.id) 
 
-  console.log(`hooor: ${hor}`);
-  console.log(`foto URI: ${fot}`);
-if(hor == '' && fot == '')
+
  
-  {return(<View><Text style={styles.txt}>Nenhuma Planta cadastrada😢🌱</Text> </View>)
-}
-  return (
+  if(!idUser){return(<View><Text style={styles.txt}>faça o login</Text> </View>)}
+  else{return (<View><Text style={styles.txt}>login feito </Text> </View>) }
+
+  /*return (
       <ScrollView>
         <View style={styles.dataPlanta}>
              <Image
@@ -30,5 +27,5 @@ if(hor == '' && fot == '')
       
       </ScrollView>
    
-  );
+  );*/
 }

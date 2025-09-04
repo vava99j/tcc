@@ -8,9 +8,10 @@ import { gemini } from '@/src/api/gemini';
 import { useFot} from '../services/zustand/FotZustand';
 import { useStore } from '../services/zustand/HorZustand';
 import { useId } from '../services/zustand/UserIdZustand'
+import { navigateToHome } from '@/app/login';
 export default function 
 () {
-  const API_URL = "http://localhost:17928";
+  const API_URL = "https://servidor-632w.onrender.com";
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ export default function
       const base64 = pickerResult.assets[0].base64;
       const uri = pickerResult.assets[0].uri;
       setImage(uri);
-      setFoto(uri)
+      setFoto(`data:image/jpeg;base64,${base64}`); 
       setLoading(true);
       setResult(null);
       setCuidados(null);
@@ -71,6 +72,9 @@ async function handleCadPlant() {
       }),
     });
 
+    navigateToHome()
+    await setCuidados("")
+    await setResult("")
     if (!res.ok) throw new Error("Erro ao cadastrar a planta");
 
     Alert.alert("Sucesso", "Planta cadastrada com sucesso!");
@@ -80,9 +84,14 @@ async function handleCadPlant() {
   }
 }
 
-  
+  if(!idUser){
+    return <View> <Text>faça login para continuar</Text> <Text>clique no i em cima</Text></View>
+  }
   return (
-    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white'}}>
+   
+
+   
+   <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white'}}>
       <Pressable onPress={escolherImagem}> <Text style={styles.button}>ESCOLHER IMAGEM</Text></Pressable>
 
       {image && (
@@ -108,12 +117,12 @@ async function handleCadPlant() {
         </View>
       )}
 
-      {idUser && hor && fot && (
+      {idUser && hor && fot && cuidados && result && (
   <Pressable onPress={handleCadPlant}>
     <Text style={styles.button}>SALVAR PLANTA</Text>
   </Pressable>
 )}
-
+   
 
    
     </ScrollView>

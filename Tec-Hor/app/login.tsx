@@ -6,10 +6,14 @@ import axios from 'axios';
 import { useId } from '../src/services/zustand/UserIdZustand'
 
 // 👉 Troque pelo IP da sua máquina ou URL do Railway
-const API_URL = "http://localhost:17928";
+const API_URL = "https://servidor-632w.onrender.com";
+
+  export function navigateToHome() {
+     const router = useRouter();
+    router.push("/(tabs)");
+  }
 
 export default function LoginScreen() {
-  const router = useRouter();
   const [criartelefone, setCriarTelefone] = useState("");
   const [criarsenha, setCriarSenha] = useState("");
   const [visible, setVisible] = useState(true);    // formulário visível
@@ -17,11 +21,9 @@ export default function LoginScreen() {
   const [visible3, setVisible3] = useState(false);
   const [entrarTel , setEntrarTel] = useState("");
   const [entrarSenha , setEntrarSenha] = useState("");
-  const { setId } = useId();
+  const { id,setId } = useId();
   // Navegar para a Home
-  function navigateToHome() {
-    router.push("/(tabs)");
-  }
+ 
 
   // Cadastrar usuário
   async function handleCadastro() {
@@ -90,7 +92,7 @@ async function toGoLogin() {
       </TouchableOpacity>
 
       {/* Formulário de cadastro */}
-      {visible && 
+      {!id && visible && 
         <View style={styles.planta}>
           <Text>Telefone</Text>
           <TextInput
@@ -116,7 +118,7 @@ async function toGoLogin() {
       }
 
       {/* Segundo View após cadastro */}
-     {visible2 && 
+     {!id && visible2 && 
   <View style={styles.planta}>
     <Text>Telefone</Text>
     <TextInput
@@ -138,10 +140,12 @@ async function toGoLogin() {
   </View>
 }
 
-      {visible3 && 
-        <View>
+      {id &&  
+        <View style={styles.planta}>
+          <View style={styles.separator}/>
+          <View style={styles.separator}/>
              <TouchableOpacity onPress={async () => { setId(''); navigateToHome(); }}>
-            <Text style={styles.button}>SAIR</Text>
+            <Text style={styles.button2}>SAIR</Text>
           </TouchableOpacity>
         </View>
 
