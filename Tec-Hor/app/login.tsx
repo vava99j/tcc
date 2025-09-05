@@ -22,7 +22,6 @@ export default function LoginScreen() {
   const [entrarTel , setEntrarTel] = useState("");
   const [entrarSenha , setEntrarSenha] = useState("");
   const { id,setId } = useId();
-
   // Cadastrar usuário
   async function handleCadastro() {
     if (!criartelefone || !criarsenha) {
@@ -52,6 +51,8 @@ export default function LoginScreen() {
   async function handleLogin() {
     if (!entrarTel || !entrarSenha) {
       Alert.alert("Erro", "Preencha todos os campos");
+  
+ 
       return;
     }
 
@@ -85,6 +86,8 @@ export default function LoginScreen() {
       <TouchableOpacity onPress={navigateToHome}>
         <Text>◀ Voltar</Text>
       </TouchableOpacity>
+
+        
 
       {/* Formulário de cadastro */}
       {!id && visible && 

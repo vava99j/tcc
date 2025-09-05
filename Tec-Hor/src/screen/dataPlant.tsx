@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, ActivityIndicator, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, FlatList, ActivityIndicator, Pressable, ScrollView } from 'react-native';
 import axios from 'axios';
 import { styles } from '@/src/style/style';
 
@@ -33,6 +33,19 @@ const PlantList = () => {
     fetchPlantas();
   }, []);
 
+const handleDeleteClick = async (id: number) => {
+  try {
+    await axios.delete(`${API_BASE}/planta/${id}`);
+    // Atualiza localmente removendo a planta do estado
+    setPlantas(prev => prev.filter(p => p.id !== id));
+  } catch (err) {
+    console.error('Erro ao deletar planta:', err);
+  }
+};
+
+
+
+
   if (loading) {
     return (
       <View style={styles.loader}>
@@ -57,6 +70,11 @@ const PlantList = () => {
         <Image source={{ uri: item.foto_url }} style={styles.image} />
       )}
       <Text style={styles.txt}>{item.horarios}</Text>
+       <Pressable onPress={() => handleDeleteClick(item.id)}>
+  <Text style={styles.button}>DELETAR PLANTA</Text>
+</Pressable>
+
+
     </View>
   )}
 />

@@ -86,9 +86,7 @@ async function handleCadPlant() {
   }
 }
 
-  if(!idUser){
-    return <View> <Text>faça login para continuar</Text> <Text>clique no i em cima</Text></View>
-  }
+
   return (
    
 
