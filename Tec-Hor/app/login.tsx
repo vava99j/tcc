@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { styles } from "@/src/style/style";
 import axios from 'axios';
 import { useId } from '../src/services/zustand/UserIdZustand'
 
-// 👉 Troque pelo IP da sua máquina ou URL do Railway
+// 👉 Troque pelo IP da sua máquina ou URL do Railway/Render
 const API_URL = "https://servidor-632w.onrender.com";
 
-  export function navigateToHome() {
-     const router = useRouter();
-    router.push("/(tabs)");
-  }
+export function navigateToHome() {
+  const router = useRouter();
+  router.push("/(tabs)");
+}
 
 export default function LoginScreen() {
   const [criartelefone, setCriarTelefone] = useState("");
   const [criarsenha, setCriarSenha] = useState("");
-  const [visible, setVisible] = useState(true);    // formulário visível
-  const [visible2, setVisible2] = useState(false); // segundo view escondido
+  const [visible, setVisible] = useState(true);
+  const [visible2, setVisible2] = useState(false);
   const [visible3, setVisible3] = useState(false);
   const [entrarTel , setEntrarTel] = useState("");
   const [entrarSenha , setEntrarSenha] = useState("");
   const { id,setId } = useId();
-  // Navegar para a Home
- 
 
   // Cadastrar usuário
   async function handleCadastro() {
@@ -31,62 +29,59 @@ export default function LoginScreen() {
       Alert.alert("Erro", "Preencha todos os campos");
       return;
     }
+
     try {
-      const res = await fetch(`${API_URL}/usuarios`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          telefone: criartelefone,
-          senha_hash: criarsenha,
-        }),});
-      if (!res.ok) throw new Error("Erro ao cadastrar usuário");
+      const res = await axios.post(`${API_URL}/usuarios`, {
+        telefone: criartelefone,
+        senha_hash: criarsenha,
+      });
+
+      if (res.status !== 201 && res.status !== 200) {
+        throw new Error("Erro ao cadastrar usuário");
+      }
+
+      setCriarTelefone('');
+      setCriarSenha('');
+      setVisible(false);
+      setVisible2(true);
     } catch (err) {
-      console.error(err);
       Alert.alert("Erro", "Não foi possível cadastrar o usuário");
     }
-    setCriarTelefone('')
-    setCriarSenha('')
-      setVisible(false);  // esconde formulário
-      setVisible2(true); 
   }
 
-async function handleLogin() {
-  if (!entrarTel || !entrarSenha) {
-    Alert.alert("Erro", "Preencha todos os campos");
-    return;
+  async function handleLogin() {
+    if (!entrarTel || !entrarSenha) {
+      Alert.alert("Erro", "Preencha todos os campos");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${API_URL}/login`, {
+        telefone: entrarTel,
+        senha_hash: entrarSenha,
+      });
+
+      setId(response.data.id);
+
+      Alert.alert("Sucesso", "Login realizado!");
+      navigateToHome();
+      setEntrarTel('');
+      setEntrarSenha('');
+      setVisible2(false);
+      setVisible3(true);
+    } catch (err) {
+      Alert.alert("Erro", "Falha ao fazer login");
+    }
   }
 
-  try {
-    const response = await axios.post(`${API_URL}/login`, {
-      telefone: entrarTel,
-      senha_hash: entrarSenha,
-    });
-
-    // supondo que o backend retorne { id: "123", ... }
-    setId(response.data.id);
-
-    Alert.alert("Sucesso", "Login realizado!");
-    navigateToHome();
-  setEntrarTel('')
-  setEntrarSenha('')
-  setVisible2(false);
-  setVisible3(true);
-  } catch (err) {
-    console.error(err);
-    Alert.alert("Erro", "Falha ao fazer login");
+  async function toGoLogin() {
+    setVisible(false)
+    setVisible2(true)
   }
 
-}
-
-async function toGoLogin() {
-  setVisible(false)
-  setVisible2(true)
-}
   return (
-   
     <View style={styles.container}>
-       <View style={styles.separator}/>
-      {/* Voltar */}
+      <View style={styles.separator}/>
       <TouchableOpacity onPress={navigateToHome}>
         <Text>◀ Voltar</Text>
       </TouchableOpacity>
@@ -112,46 +107,44 @@ async function toGoLogin() {
             <Text style={styles.button}>CRIAR CONTA</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={toGoLogin}>
-            <Text>Ja possuo uma conta</Text>
+            <Text>Já possuo uma conta</Text>
           </TouchableOpacity>
         </View>
       }
 
-      {/* Segundo View após cadastro */}
-     {!id && visible2 && 
-  <View style={styles.planta}>
-    <Text>Telefone</Text>
-    <TextInput
-      style={styles.input}
-      keyboardType="numeric"
-      value={entrarTel}
-      onChangeText={setEntrarTel}
-    />
-    <Text>Senha</Text>
-    <TextInput
-      style={styles.input}
-      secureTextEntry
-      value={entrarSenha}
-      onChangeText={setEntrarSenha}
-    />
-    <TouchableOpacity onPress={handleLogin}>
-      <Text style={styles.button}>ENTRAR</Text>
-    </TouchableOpacity>
-  </View>
-}
+      {/* Formulário de login */}
+      {!id && visible2 && 
+        <View style={styles.planta}>
+          <Text>Telefone</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={entrarTel}
+            onChangeText={setEntrarTel}
+          />
+          <Text>Senha</Text>
+          <TextInput
+            style={styles.input}
+            secureTextEntry
+            value={entrarSenha}
+            onChangeText={setEntrarSenha}
+          />
+          <TouchableOpacity onPress={handleLogin}>
+            <Text style={styles.button}>ENTRAR</Text>
+          </TouchableOpacity>
+        </View>
+      }
 
+      {/* Usuário logado */}
       {id &&  
         <View style={styles.planta}>
           <View style={styles.separator}/>
           <View style={styles.separator}/>
-             <TouchableOpacity onPress={async () => { setId(''); navigateToHome(); }}>
+          <TouchableOpacity onPress={async () => { setId(''); navigateToHome(); }}>
             <Text style={styles.button2}>SAIR</Text>
           </TouchableOpacity>
         </View>
-
-
       }
-
 
       <View style={styles.separator}></View>
     </View>

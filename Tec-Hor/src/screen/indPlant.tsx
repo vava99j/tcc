@@ -75,6 +75,8 @@ async function handleCadPlant() {
     navigateToHome()
     await setCuidados("")
     await setResult("")
+    await setFoto("")
+    await setImage("")
     if (!res.ok) throw new Error("Erro ao cadastrar a planta");
 
     Alert.alert("Sucesso", "Planta cadastrada com sucesso!");
