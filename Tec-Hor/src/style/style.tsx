@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   title: {
-    fontSize: 50,
+    fontSize: 40,
     fontWeight: 'bold',
     color: "green"
   },
@@ -78,5 +78,16 @@ export const styles = StyleSheet.create({
     borderColor: "green",
     
   },
+  image: {
+     width: '100%', 
+     height: 200, 
+     resizeMode: 'cover',
+      borderRadius: 8
+     },
+  loader: { 
+    flex: 1, 
+    justifyContent: 'center',
+     alignItems: 'center' 
+    },
 
 });

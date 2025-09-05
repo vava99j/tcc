@@ -40,7 +40,7 @@ export default function ModalScreen() {
     </ScrollView>
     
     </View>
-    <Text style={styles.title}>  OBRIGADO PELA ATENÇÃO  </Text>
+    <Text style={{color:"green"}} >  OBRIGADO PELA ATENÇÃO  </Text>
     </View>
   );
 }
