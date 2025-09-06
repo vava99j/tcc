@@ -1,4 +1,4 @@
-import dataPlant from "../screen/dataPlant";
+
 import arduino from "./ard";
 import horarios from "./horarios";
 import { useStore } from "./zustand/HorZustand";
