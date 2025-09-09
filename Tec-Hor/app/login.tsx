@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Alert, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { styles } from "@/src/style/style";
 import axios from 'axios';
@@ -105,12 +105,23 @@ export default function LoginScreen() {
             value={criarsenha}
             onChangeText={setCriarSenha}/>
             <View style={styles.separatorL}/>
-          <TouchableOpacity onPress={handleCadastro}>
-            <Text style={styles.button}>CRIAR CONTA</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={toGoLogin}>
+          <Pressable onPress={handleCadastro}
+           style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? '#b0dca8' : 'green',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+                
+              },
+            ]}>
+            <Text style={styles.txtW}>CRIAR CONTA</Text>
+          </Pressable>
+          <Pressable onPress={toGoLogin}>
             <Text>Já possuo uma conta</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       }
 
@@ -131,10 +142,22 @@ export default function LoginScreen() {
             value={entrarSenha}
             onChangeText={setEntrarSenha}
           />
-          <TouchableOpacity onPress={handleLogin}>
-            <View style={styles.separatorL}/>
-            <Text style={styles.button}>ENTRAR</Text>
-          </TouchableOpacity>
+          <View style={styles.separatorL}/>
+          <Pressable onPress={handleLogin}
+          style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? '#b0dca8' : 'green',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+                
+              },
+            ]}>
+            
+            <Text style={styles.txtW}>ENTRAR</Text>
+          </Pressable>
         </View>
       }
 
@@ -142,9 +165,21 @@ export default function LoginScreen() {
         <View style={styles.planta}>
           <View style={styles.separator}/>
           <View style={styles.separator}/>
-          <TouchableOpacity onPress={async () => { setId(''); navigateToHome(); }}>
-            <Text style={styles.button2}>SAIR</Text>
-          </TouchableOpacity>
+          <Pressable onPress={async () => { setId(''); navigateToHome(); }}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? 'red' : 'white',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+                borderColor: pressed ? 'black' : 'green',
+                borderWidth: 2
+              },
+            ]}>
+            <Text>SAIR</Text>
+          </Pressable>
         </View>
       }
 

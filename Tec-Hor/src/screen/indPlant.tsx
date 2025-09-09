@@ -92,7 +92,19 @@ async function handleCadPlant() {
 
    
    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white'}}>
-      <Pressable onPress={escolherImagem}> <Text style={styles.button}>ESCOLHER IMAGEM</Text></Pressable>
+      <Pressable onPress={escolherImagem}
+       style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? '#b0dca8' : 'green',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+                
+              },
+            ]}
+      > <Text style={styles.txtW}>ESCOLHER IMAGEM</Text></Pressable>
 
       {image && (
         <Image
@@ -118,8 +130,18 @@ async function handleCadPlant() {
       )}
 
       {idUser && hor && fot && cuidados && result && (
-  <Pressable onPress={handleCadPlant}>
-    <Text style={styles.button}>SALVAR PLANTA</Text>
+  <Pressable onPress={handleCadPlant}
+  style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? '#b0dca8' : 'green',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+              },
+            ]}>
+    <Text style={styles.txtW}>SALVAR PLANTA</Text>
   </Pressable>
 )}
    

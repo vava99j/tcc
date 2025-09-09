@@ -22,8 +22,10 @@ export const styles = StyleSheet.create({
   },
   txt:{
     padding: 10,
-    backgroundColor:"white",
     color: "black"
+  },
+  txtW:{
+    color: "white"
   },
   planta: {
     backgroundColor: "white",
@@ -50,26 +52,6 @@ export const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     
-  },
-  button:{
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 10,
-    fontFamily: 'bold',
-    color: 'white',
-    fontSize: 15,
-    textAlign: 'center'
-  },
-   button2:{
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 10,
-    fontFamily: 'bold',
-    color: 'green',
-    borderColor:'green',
-    borderWidth: 1,
-    fontSize: 15,
-    textAlign: 'center'
   },
   separator: {
     marginVertical: 30,

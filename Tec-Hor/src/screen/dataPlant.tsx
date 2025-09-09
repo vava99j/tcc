@@ -36,8 +36,8 @@ const PlantList = () => {
     fetchPlantas();
   }, []);
 
-  const handleDeleteClick = async (id: number) => {
-    if (deletingId !== null) return; // evita múltiplos cliques simultâneos
+  const handleDelete = async (id: number) => {
+    if (deletingId !== null) return; 
 
     try {
       setDeletingId(id);
@@ -73,7 +73,7 @@ const PlantList = () => {
           )}
           <Text style={styles.txt}>{item.horarios}</Text>
           <Pressable
-            onPress={() => handleDeleteClick(item.id)}
+            onPress={() => handleDelete(item.id)}
             style={({ pressed }) => [
               {
                 backgroundColor: pressed ? '#b0dca8' : 'green',
@@ -89,7 +89,7 @@ const PlantList = () => {
             {deletingId === item.id ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>DELETAR PLANTA</Text>
+              <Text style={styles.txtW}>DELETAR PLANTA</Text>
             )}
           </Pressable>
         </View>
