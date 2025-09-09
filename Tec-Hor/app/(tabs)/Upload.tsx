@@ -23,9 +23,9 @@ export default function TabTwoScreen() {
       
       <Text style={styles.title}> Uploader</Text>
         {!idUser && 
-      <View>
+      
               <Text style={styles.txt}>faça o login</Text>
-      </View>
+      
         } 
       {idUser && <View style={styles.planta}> <IndPlant/> </View>}
       

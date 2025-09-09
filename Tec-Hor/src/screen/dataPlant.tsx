@@ -87,7 +87,7 @@ const PlantList = () => {
             disabled={deletingId === item.id}
           >
             {deletingId === item.id ? (
-              <ActivityIndicator color="#fff" />
+              <ActivityIndicator color="white" />
             ) : (
               <Text style={styles.txtW}>DELETAR PLANTA</Text>
             )}

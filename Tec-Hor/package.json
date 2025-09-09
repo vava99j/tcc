@@ -7,7 +7,8 @@
     "start": "expo start",
     "web": "expo start --web",
     "anoStart":"expo start --tunnel",
-    "i": " npm install"
+    "i": " npm install",
+    "OpenServer": "cmd.exe /c src\\services\\AbrirServer.bat"
   },
   "jest": {
     "preset": "jest-expo"

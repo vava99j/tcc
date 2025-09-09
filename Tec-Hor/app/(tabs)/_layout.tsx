@@ -22,8 +22,6 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor:"green",
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true ),
       }}>
       <Tabs.Screen
@@ -71,6 +69,19 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: ({ color }) => <TabBarIcon name="info-circle" color={color} />,
+          headerRight: () => (
+            <Link href="/login" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="user"
+                    size={25}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}    
+                    />
+                )}
+              </Pressable>
+            </Link>)
         }}
       />
     </Tabs>
