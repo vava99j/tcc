@@ -6,11 +6,12 @@ import { styles } from '@/src/style/style';
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.separatorL}/>
       <View style={styles.planta}>
     <ScrollView style={styles.scroll}>
-      <Text style={styles.title}> Instrução </Text>
+      <Text style={styles.title}> {'\n'}Instrução </Text>
         <Text style={styles.txt}>
-	{'\n'}1.	Abra a câmera nativa do seu celular e tire uma fotografia da planta que deseja monitorar.
+      	1.	Abra a câmera nativa do seu celular e tire uma fotografia da planta que deseja monitorar.
 	{'\n'}2.	Em seguida, acesse o aplicativo Tec-Hor e entre na aba Uploader.
 	{'\n'}3.	Toque no botão “Escolher Imagem” e selecione a foto tirada da planta.
 	{'\n'}4.	Conecte o seu celular à entrada USB do sistema Tec-Hor.
@@ -20,7 +21,7 @@ export default function ModalScreen() {
 
 <Text style={styles.title}> Sobre o TH </Text>
   <Text style={styles.txt}>
-    {'\n'}O presente trabalho apresenta o Tec-Hor, um sistema voltado para o controle
+    O presente trabalho apresenta o Tec-Hor, um sistema voltado para o controle
     inteligente de uma horta estufa. O projeto tem como principal 
     objetivo inserir o desenvolvimento de sistemas na área verde, promovendo uma conexão entre 
     a tecnologia e o cultivo sustentável de plantas. Dessa forma, busca-se responder à 

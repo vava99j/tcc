@@ -6,7 +6,8 @@
   "scripts": {
     "start": "expo start",
     "web": "expo start --web",
-    "anoStart":"expo start --tunnel"
+    "anoStart":"expo start --tunnel",
+    "i": " npm install"
   },
   "jest": {
     "preset": "jest-expo"

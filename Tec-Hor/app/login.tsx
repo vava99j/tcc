@@ -81,17 +81,16 @@ export default function LoginScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.separator}/>
+    <View style={styles.containerL}>
+      <View style={styles.separatorL}/>
       <TouchableOpacity onPress={navigateToHome}>
         <Text>◀ Voltar</Text>
       </TouchableOpacity>
+      <View style={styles.separator}/>
 
-        
-
-      {/* Formulário de cadastro */}
       {!id && visible && 
         <View style={styles.planta}>
+      <View style={styles.separatorL}/>
           <Text>Telefone</Text>
           <TextInput
             style={styles.input}
@@ -104,8 +103,8 @@ export default function LoginScreen() {
             style={styles.input}
             secureTextEntry
             value={criarsenha}
-            onChangeText={setCriarSenha}
-          />
+            onChangeText={setCriarSenha}/>
+            <View style={styles.separatorL}/>
           <TouchableOpacity onPress={handleCadastro}>
             <Text style={styles.button}>CRIAR CONTA</Text>
           </TouchableOpacity>
@@ -115,9 +114,9 @@ export default function LoginScreen() {
         </View>
       }
 
-      {/* Formulário de login */}
       {!id && visible2 && 
         <View style={styles.planta}>
+          <View style={styles.separatorL}/>
           <Text>Telefone</Text>
           <TextInput
             style={styles.input}
@@ -133,12 +132,12 @@ export default function LoginScreen() {
             onChangeText={setEntrarSenha}
           />
           <TouchableOpacity onPress={handleLogin}>
+            <View style={styles.separatorL}/>
             <Text style={styles.button}>ENTRAR</Text>
           </TouchableOpacity>
         </View>
       }
 
-      {/* Usuário logado */}
       {id &&  
         <View style={styles.planta}>
           <View style={styles.separator}/>

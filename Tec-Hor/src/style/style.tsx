@@ -6,17 +6,24 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white'
   },
+  containerL: {
+    flex: 1,
+    
+    backgroundColor: 'white'
+  },
   scroll:{
     flex: 1,
     backgroundColor: 'white'
   },
   title: {
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: 'bold',
     color: "green"
   },
   txt:{
-    padding: 10
+    padding: 10,
+    backgroundColor:"white",
+    color: "black"
   },
   planta: {
     backgroundColor: "white",
@@ -69,10 +76,14 @@ export const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+   separatorL: {
+    marginVertical: 20,
+    height: 1,
+    width: '10%',
+  },
   input: {
-    height: 35,
+    height: 40,
     width: "80%",
-    margin: 5,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "green",

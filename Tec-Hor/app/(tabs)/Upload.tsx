@@ -22,11 +22,12 @@ export default function TabTwoScreen() {
      
       
       <Text style={styles.title}> Uploader</Text>
-        {!idUser && <View>
-      <Pressable onPress={navigateToLogin}><Text style={styles.button2}>ir para login</Text></Pressable></View>
-      }
-       
-      <View style={styles.planta}> <IndPlant/> </View>
+        {!idUser && 
+      <View>
+              <Text style={styles.txt}>faça o login</Text>
+      </View>
+        } 
+      {idUser && <View style={styles.planta}> <IndPlant/> </View>}
       
     </View>
     

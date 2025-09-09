@@ -20,7 +20,6 @@ export default function TabOneScreen() {
       </View>
       }
       
-      <View style={styles.planta}>  </View>
     
     </View>
   );

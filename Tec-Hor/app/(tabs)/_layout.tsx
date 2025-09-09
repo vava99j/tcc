@@ -39,8 +39,8 @@ export default function TabLayout() {
                     name="user"
                     size={25}
                     color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}    
+                    />
                 )}
               </Pressable>
             </Link>)
@@ -51,6 +51,19 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: ({ color }) => <TabBarIcon name="upload" color={color} />,
+          headerRight: () => (
+            <Link href="/login" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="user"
+                    size={25}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}    
+                    />
+                )}
+              </Pressable>
+            </Link>)
         }}
       />
       <Tabs.Screen
