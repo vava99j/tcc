@@ -6,7 +6,7 @@
   "scripts": {
     "start": "expo start",
     "web": "expo start --web",
-    "anoStart":"expo start --tunnel",
+    "grok-web":"expo start --tunnel --web",
     "i": " npm install",
     "OpenServer": "cmd.exe /c src\\services\\AbrirServer.bat"
   },
