@@ -16,13 +16,14 @@ export function navigateToHome() {
 export default function LoginScreen() {
   const [criartelefone, setCriarTelefone] = useState("");
   const [criarsenha, setCriarSenha] = useState("");
+  const [cod_ard , setCodArd] = useState("");
   const [visible, setVisible] = useState(true);
   const [visible2, setVisible2] = useState(false);
   const [visible3, setVisible3] = useState(false);
   const [entrarTel , setEntrarTel] = useState("");
   const [entrarSenha , setEntrarSenha] = useState("");
   const { id,setId } = useId();
-  // Cadastrar usuário
+ 
   async function handleCadastro() {
     if (!criartelefone || !criarsenha) {
       Alert.alert("Erro", "Preencha todos os campos");
@@ -180,6 +181,12 @@ export default function LoginScreen() {
             ]}>
             <Text>SAIR</Text>
           </Pressable>
+
+            <TextInput
+            style={styles.input}
+            value={cod_ard}
+            onChangeText={setCodArd}
+          />
         </View>
       }
 
