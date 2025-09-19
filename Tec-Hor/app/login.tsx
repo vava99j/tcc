@@ -49,14 +49,13 @@ export default function LoginScreen() {
     }
   }
 
+  
+
   async function handleLogin() {
     if (!entrarTel || !entrarSenha) {
       Alert.alert("Erro", "Preencha todos os campos");
-  
- 
       return;
     }
-
     try {
       const response = await axios.post(`${API_URL}/login`, {
         telefone: entrarTel,
@@ -76,11 +75,39 @@ export default function LoginScreen() {
     }
   }
 
+
+  async function handleArd() {
+    if (!criartelefone || !criarsenha) {
+      Alert.alert("Erro", "Preencha todos os campos");
+      return;
+    }
+
+    try {
+      const res = await axios.put(`${API_URL}/arduinos`, {
+        telefone: criartelefone,
+        senha_hash: criarsenha,
+      });
+
+      if (res.status !== 201 && res.status !== 200) {
+        throw new Error("Erro ao cadastrar usuário");
+      }
+
+      setCriarTelefone('');
+      setCriarSenha('');
+      setVisible(false);
+      setVisible2(true);
+    } catch (err) {
+      Alert.alert("Erro", "Não foi possível cadastrar o usuário");
+    }
+  }
+
   async function toGoLogin() {
     setVisible(false)
     setVisible2(true)
   }
 
+
+  
   return (
     <View style={styles.containerL}>
       <View style={styles.separatorL}/>
@@ -181,12 +208,25 @@ export default function LoginScreen() {
             ]}>
             <Text>SAIR</Text>
           </Pressable>
-
+          <View style={styles.separatorL}/>
+          <Text> Codigo do Arduino </Text>
             <TextInput
             style={styles.input}
             value={cod_ard}
             onChangeText={setCodArd}
           />
+          <Pressable onPress={handleArd}
+          style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? '#b0dca8' : 'green',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+                
+              },
+            ]}></Pressable>
         </View>
       }
 
