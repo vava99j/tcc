@@ -5,7 +5,7 @@ import { styles } from "@/src/style/style";
 import axios from 'axios';
 import { useId } from '../src/services/zustand/UserIdZustand'
 
-// 👉 Troque pelo IP da sua máquina ou URL do Railway/Render
+
 const API_URL = "https://servidor-632w.onrender.com";
 
 export function navigateToHome() {
@@ -215,6 +215,13 @@ export default function LoginScreen() {
             value={cod_ard}
             onChangeText={setCodArd}
           />
+
+          <Text> Nome Da Planta </Text>
+            <TextInput
+            style={styles.input}
+            value={cod_ard}
+            onChangeText={setCodArd}
+          />
           <Pressable onPress={handleArd}
           style={({ pressed }) => [
               {
@@ -226,7 +233,8 @@ export default function LoginScreen() {
                 marginTop: 10,
                 
               },
-            ]}></Pressable>
+            ]}>
+            <Text style={styles.txtW}>enviar</Text></Pressable>
         </View>
       }
 
