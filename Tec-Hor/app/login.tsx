@@ -22,6 +22,7 @@ export default function LoginScreen() {
   const [visible3, setVisible3] = useState(false);
   const [entrarTel , setEntrarTel] = useState("");
   const [entrarSenha , setEntrarSenha] = useState("");
+  const [horarios , setHorarios] = useState("")
   const { id,setId } = useId();
  
   async function handleCadastro() {
@@ -76,30 +77,25 @@ export default function LoginScreen() {
   }
 
 
-  async function handleArd() {
-    if (!criartelefone || !criarsenha) {
-      Alert.alert("Erro", "Preencha todos os campos");
-      return;
-    }
+  
+const handleArd = async (cod_ard: string) => {
+  console.log("Tentando atualizar Arduino com código:", cod_ard);
+  try {
+    const response = await axios.patch(`${API_URL}/arduinos/${cod_ard}`, {
+      id_usuarios: id,
+      horarios: horarios
+    });
 
-    try {
-      const res = await axios.put(`${API_URL}/arduinos`, {
-        telefone: criartelefone,
-        senha_hash: criarsenha,
-      });
-
-      if (res.status !== 201 && res.status !== 200) {
-        throw new Error("Erro ao cadastrar usuário");
-      }
-
-      setCriarTelefone('');
-      setCriarSenha('');
-      setVisible(false);
-      setVisible2(true);
-    } catch (err) {
-      Alert.alert("Erro", "Não foi possível cadastrar o usuário");
-    }
+    Alert.alert('Sucesso', response.data.message);
+  } catch (error: any) {
+    console.error('Erro ao atualizar Arduino:', error);
+    Alert.alert(
+      'Erro',
+      error.response?.data?.error || 'Não foi possível atualizar o Arduino.'
+    );
   }
+};
+
 
   async function toGoLogin() {
     setVisible(false)
@@ -209,32 +205,36 @@ export default function LoginScreen() {
             <Text>SAIR</Text>
           </Pressable>
           <View style={styles.separatorL}/>
-          <Text> Codigo do Arduino </Text>
-            <TextInput
-            style={styles.input}
-            value={cod_ard}
-            onChangeText={setCodArd}
-          />
+         <Text> Codigo do Arduino </Text>
+<TextInput
+  style={styles.input}
+  value={cod_ard}
+  onChangeText={setCodArd}
+/>
 
-          <Text> Nome Da Planta </Text>
-            <TextInput
-            style={styles.input}
-            value={cod_ard}
-            onChangeText={setCodArd}
-          />
-          <Pressable onPress={handleArd}
-          style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-                
-              },
-            ]}>
-            <Text style={styles.txtW}>enviar</Text></Pressable>
+<Text> Nome Da Planta </Text>
+<TextInput
+  style={styles.input}
+  value={horarios}
+  onChangeText={setHorarios}
+/>
+
+<Pressable
+  onPress={() => handleArd(cod_ard)} 
+  style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? '#b0dca8' : 'green',
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderRadius: 8,
+      alignItems: 'center',
+      marginTop: 10,
+    },
+  ]}
+>
+  <Text style={styles.txtW}>enviar</Text>
+</Pressable>
+
         </View>
       }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "expo start",
     "web": "expo start --web",
-    "grok-web":"expo start --tunnel --web",
+    "grok-web": "expo start --tunnel --web",
     "i": " npm install",
     "OpenServer": "cmd.exe /c src\\services\\AbrirServer.bat"
   },
@@ -41,7 +41,8 @@
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-web": "~0.20.0",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.8",
+    "expo-clipboard": "~7.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

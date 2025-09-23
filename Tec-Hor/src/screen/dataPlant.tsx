@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {View,Text,Image,FlatList,ActivityIndicator,Pressable,Alert,} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  ActivityIndicator,
+  Pressable,
+  Alert,
+} from 'react-native';
 import axios from 'axios';
 import { styles } from '@/src/style/style';
 import { useId } from '../services/zustand/UserIdZustand';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 interface Planta {
   id: number;
@@ -13,12 +21,13 @@ interface Planta {
   nomepl: string;
 }
 
-const API_BASE = 'https://servidor-632w.onrender.com/plantas';
+const API_BASE = 'https://servidor-632w.onrender.com/plantas'
 
 const PlantList = () => {
   const [plantas, setPlantas] = useState<Planta[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [upArd , setUpArd] = useState<string |null>(null)
   const idUser = useId((state) => state.id);
 
   useEffect(() => {
@@ -52,12 +61,16 @@ const PlantList = () => {
       setDeletingId(null);
     }
   };
+ 
 
-const handleCopy = (text: string) => {
-  Clipboard.setString(text);
-  Alert.alert('Copiado', 'Nome da planta copiado para a área de transferência.');
-};
-
+  const handleCopy = async (text: string) => {
+    try {
+      await Clipboard.setStringAsync(text);
+      Alert.alert('Copiado!', 'Nome da planta copiado para a área de transferência.');
+    } catch (error) {
+      console.error('Erro ao copiar texto:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -76,13 +89,16 @@ const handleCopy = (text: string) => {
       ListFooterComponent={() => <View style={{ height: 30 }} />}
       renderItem={({ item }) => (
         <View style={styles.dataPlanta}>
-          <Pressable onPress={() => handleCopy(item.nomepl)}>
+          <Pressable onPress={() => handleCopy(item.horarios)}>
             <Text style={{ color: 'blue', marginBottom: 5 }}>Copiar nome</Text>
           </Pressable>
+
           {item.foto_url && (
             <Image source={{ uri: item.foto_url }} style={styles.image} />
           )}
+
           <Text style={styles.txt}>{item.horarios}</Text>
+
           <Pressable
             onPress={() => handleDelete(item.id)}
             style={({ pressed }) => [
