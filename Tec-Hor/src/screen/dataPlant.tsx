@@ -27,7 +27,6 @@ const PlantList = () => {
   const [plantas, setPlantas] = useState<Planta[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
-  const [upArd , setUpArd] = useState<string |null>(null)
   const idUser = useId((state) => state.id);
 
   useEffect(() => {
@@ -89,8 +88,20 @@ const PlantList = () => {
       ListFooterComponent={() => <View style={{ height: 30 }} />}
       renderItem={({ item }) => (
         <View style={styles.dataPlanta}>
-          <Pressable onPress={() => handleCopy(item.horarios)}>
-            <Text style={{ color: 'blue', marginBottom: 5 }}>Copiar nome</Text>
+          <Pressable 
+           style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? '#b0dca8' : 'green',
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 8,
+                alignItems: 'center',
+                marginTop: 10,
+                marginVertical:2
+              },
+            ]}
+            onPress={() => handleCopy(item.horarios)}>
+            <Text style={styles.txtW} >Copiar nome</Text>
           </Pressable>
 
           {item.foto_url && (

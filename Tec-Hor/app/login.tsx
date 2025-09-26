@@ -82,7 +82,7 @@ const handleArd = async (cod_ard: string) => {
   console.log("Tentando atualizar Arduino com código:", cod_ard);
   try {
     const response = await axios.patch(`${API_URL}/arduinos/${cod_ard}`, {
-      id_usuarios: id,
+      cod_ard: cod_ard,
       horarios: horarios
     });
 
@@ -187,7 +187,6 @@ const handleArd = async (cod_ard: string) => {
 
       {id &&  
         <View style={styles.planta}>
-          <View style={styles.separator}/>
           <View style={styles.separator}/>
           <Pressable onPress={async () => { setId(''); navigateToHome(); }}
             style={({ pressed }) => [
