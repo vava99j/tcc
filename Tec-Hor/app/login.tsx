@@ -77,16 +77,16 @@ export default function LoginScreen() {
   }
 
 
-  
-const handleArd = async (cod_ard: string) => {
+  const handleArd = async () => {
   console.log("Tentando atualizar Arduino com código:", cod_ard);
   try {
     const response = await axios.patch(`${API_URL}/arduinos/${cod_ard}`, {
-      cod_ard: cod_ard,
+      usuario_id: id,
       horarios: horarios
     });
 
-    Alert.alert('Sucesso', response.data.message);
+    Alert.alert('Sucesso', response.data.message || 'Arduino atualizado!');
+    navigateToHome()
   } catch (error: any) {
     console.error('Erro ao atualizar Arduino:', error);
     Alert.alert(
@@ -95,6 +95,7 @@ const handleArd = async (cod_ard: string) => {
     );
   }
 };
+
 
 
   async function toGoLogin() {
@@ -219,7 +220,7 @@ const handleArd = async (cod_ard: string) => {
 />
 
 <Pressable
-  onPress={() => handleArd(cod_ard)} 
+  onPress={handleArd} 
   style={({ pressed }) => [
     {
       backgroundColor: pressed ? '#b0dca8' : 'green',
