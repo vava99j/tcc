@@ -81,7 +81,7 @@ export default function LoginScreen() {
   console.log("Tentando atualizar Arduino com código:", cod_ard);
   try {
     const response = await axios.patch(`${API_URL}/arduinos/${cod_ard}`, {
-      usuario_id: id,
+      usuario_id: Number(id),
       horarios: horarios
     });
 
