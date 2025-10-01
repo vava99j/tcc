@@ -1,4 +1,4 @@
-projeto Tec-Hor tem como proposta desenvolver um sistema inteligente para auxiliar no cultivo de plantas. Atualmente, nosso aplicativo já consegue identificar a planta e realizar o cadastro em um banco de dados na nuvem, garantindo que as informações fiquem acessíveis. Também implementamos uma função de ligação simples.
+projeto Tec-Hor tem como proposta desenvolver um sistema inteligente para auxiliar no cultivo de plantas. Atualmente, nosso aplicativo já consegue identificar a planta e realizar o cadastro em um banco de dados (localizado na nuvem do railway e o back end no render) garantindo que as informações fiquem acessíveis. Também implementamos uma função de ligação simples com arduino que funcionou.
 
 Para o desenvolvimento, utilizamos frameworks e linguagens atuais:
 	•	React: responsável pela interface, tornando o aplicativo mais interativo e intuitivo;
