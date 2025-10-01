@@ -32,3 +32,8 @@ O **Tec-Hor** tem como proposta desenvolver um sistema inteligente para auxiliar
 ## 🚀 Objetivo final
 
 Criar um sistema que una software e hardware, permitindo que qualquer pessoa possa cultivar suas plantas de forma **inteligente**, **prática** e **sustentável**.
+
+---
+
+## 🔗 Link Site Tec-Hor
+[Visite o site Tec-Hor](https://tec-hor.vercel.app/) 
