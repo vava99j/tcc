@@ -37,3 +37,6 @@ Criar um sistema que una software e hardware, permitindo que qualquer pessoa pos
 
 ## 🔗 Link Site Tec-Hor
 [Visite o site Tec-Hor](https://tec-hor.vercel.app/) 
+
+## 🖥️ Link separado do Servidor
+(https://github.com/vava99j/servidor.git)
