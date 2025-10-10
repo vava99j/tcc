@@ -1,11 +1,8 @@
 import { styles } from '@/src/style/style';
-import axios from 'axios';
-import * as ImagePicker from 'expo-image-picker';
 import { Text, View } from '@/components/Themed';
 import  IndPlant  from '../../src/screen/indPlant';
 import { useId } from '@/src/services/zustand/UserIdZustand'
 import { useRouter } from 'expo-router';
-import { Pressable } from 'react-native';
 
  export function navigateToLogin() {
     const router = useRouter();
