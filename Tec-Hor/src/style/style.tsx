@@ -20,8 +20,13 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: "green"
   },
+    title2: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: "green"
+  },
   txt:{
-    padding: 10,
+    paddingHorizontal: 10,
     color: "black"
   },
   txtW:{
@@ -82,5 +87,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
      alignItems: 'center' 
     },
+   row: {
+  flexDirection:'row',
+  justifyContent: 'space-evenly'
+   }
 
 });

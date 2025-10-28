@@ -30,7 +30,6 @@ export default function PlantIdentifierScreen() {
   const idUser = useId((state) => state.id);
   const { setFoto } = useFot.getState();
 
-  // Selecionar imagem da galeria
   const escolherImagem = async () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       base64: true,
@@ -65,7 +64,6 @@ export default function PlantIdentifierScreen() {
     }
   };
 
-  // Cadastrar planta no backend
   async function handleCadPlant() {
     try {
       const res = await fetch(`${API_URL}/plantas`, {
@@ -83,7 +81,6 @@ export default function PlantIdentifierScreen() {
       Alert.alert('Sucesso', 'Planta cadastrada com sucesso!');
       navigateToHome();
 
-      // Limpar dados
       setCuidados('');
       setResult('');
       setFoto('');
@@ -96,7 +93,6 @@ export default function PlantIdentifierScreen() {
 
   return (
     <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white' }}>
-      {/* Botão de escolher imagem */}
       <Pressable
         onPress={escolherImagem}
         style={({ pressed }) => [
@@ -112,8 +108,22 @@ export default function PlantIdentifierScreen() {
       >
         <Text style={styles.txtW}>ESCOLHER IMAGEM</Text>
       </Pressable>
+          <Pressable
+        onPress={escolherImagem}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? '#b0dca8' : 'green',
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            borderRadius: 8,
+            alignItems: 'center',
+            marginTop: 10,
+          },
+        ]}
+      >
+        <Text style={styles.txtW}>ESCOLHER IMAGEM</Text>
+      </Pressable>
 
-      {/* Imagem selecionada */}
       {image && (
         <Image
           source={{ uri: image }}

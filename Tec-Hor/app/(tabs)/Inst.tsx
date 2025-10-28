@@ -5,14 +5,22 @@ import { styles } from '@/src/style/style';
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
-      <View style={styles.separatorL} />
+         <Text style={styles.title}>Instruções</Text>
 
       <View style={styles.planta}>
         <ScrollView style={styles.scroll}>
-          <Text style={styles.title}> {'\n'}Instrução </Text>
-
-          <Text style={styles.txt}>
+       
+          <View style={styles.row}> 
+             <Text style={styles.title2}> {'\n'}Planta</Text>  <Text style={styles.title2}> {'\n'}Semente</Text>
+          </View>
+          <View style={styles.row}>     <Text style={styles.txt}>
             1. Abra a câmera nativa do seu celular e tire uma fotografia da planta que deseja monitorar.
+          </Text>
+          <Text style={styles.txt}>
+            1. Abra o navegador e pesquise o nome científico ou popular da planta salve a imagem ou tire um print.
+          </Text>
+          </View>
+          <Text style={styles.txt}>
             {'\n'}2. Em seguida, acesse o aplicativo Tec-Hor e entre na aba Uploader.
             {'\n'}3. Toque no botão “Escolher Imagem” e selecione a foto tirada da planta.
             {'\n'}4. Conecte o seu celular à entrada USB do sistema Tec-Hor.

@@ -4,11 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "expo start",
+    "bw": "npm run i && npm run web",
     "web": "expo start --web",
     "grok-web": "expo start --tunnel --web",
-    "i": " npm install",
-    "OpenServer": "cmd.exe /c src\\services\\AbrirServer.bat"
+    "start": "expo start"
   },
   "jest": {
     "preset": "jest-expo"

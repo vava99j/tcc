@@ -65,7 +65,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="modal"
+        name="Inst"
         options={{
           title: '',
           tabBarIcon: ({ color }) => <TabBarIcon name="info-circle" color={color} />,
