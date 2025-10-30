@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
-  Pressable,
   Alert,
 } from 'react-native';
 import axios from 'axios';
@@ -15,8 +14,8 @@ import { useId } from '../services/zustand/UserIdZustand';
 interface Planta {
   id: number;
   usuario_id: number;
-  foto_url: string;
   cod_ard: string;
+  umd: string
 }
 
 const API_BASE = 'https://servidor-632w.onrender.com/arduino';
@@ -49,7 +48,7 @@ const ArduinoList = () => {
 
     try {
       setDeletingId(id);
-      
+
     } catch (err) {
       console.error('Erro ao deletar planta:', err);
       Alert.alert('Erro', 'Não foi possível deletar a Estufa. Tente novamente.');
@@ -61,7 +60,7 @@ const ArduinoList = () => {
   if (loading) {
     return (
       <View style={styles.loader}>
-        <ActivityIndicator size="large" color="green" />
+        <ActivityIndicator color="green" />
         <Text>Carregando Estufa/s...</Text>
       </View>
     );
@@ -71,32 +70,17 @@ const ArduinoList = () => {
     <FlatList
       data={arduinos}
       keyExtractor={(item) => item.id.toString()}
-      ListHeaderComponent={() => <View style={{ padding: 15 }} />}
-      ListFooterComponent={() => <View style={{ height: 30 }} />}
+      ListHeaderComponent={() => <View style={{ padding: 10 }} />}
+      ListFooterComponent={() => <View style={{ height: 'auto' }} />}
       renderItem={({ item }) => (
-        <View style={styles.dataPlanta}>
-          <Text style={styles.txt}>{item.cod_ard}</Text>
+        <View style={styles.dataPlanta1}>
+          <View style={styles.row}>
+            <Text>Cod. Estufa:</Text><Text style={styles.txtg}> {item.cod_ard}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text>Cod. Estufa:</Text><Text style={styles.txtg}> {item.umd}</Text>
+          </View>
 
-          <Pressable
-            onPress={() => handleDelete(item.id)}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-              },
-            ]}
-            disabled={deletingId === item.id}
-          >
-            {deletingId === item.id ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={styles.txtW}>DELETAR ESTUFA</Text>
-            )}
-          </Pressable>
         </View>
       )}
     />

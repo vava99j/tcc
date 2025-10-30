@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Alert, Pressable } from 'react-native';
+import { suporteSite } from '@/src/services/site';
 import { useRouter } from 'expo-router';
 import { styles } from '@/src/style/style';
 import axios from 'axios';
@@ -105,9 +106,7 @@ export default function LoginScreen() {
       <TouchableOpacity onPress={navigateToHome}>
         <Text>◀ Voltar</Text>
       </TouchableOpacity>
-
       <View style={styles.separator} />
-
       {!id && visible && (
         <View style={styles.planta}>
           <View style={styles.separatorL} />
@@ -147,7 +146,7 @@ export default function LoginScreen() {
           </Pressable>
 
           <Pressable onPress={toGoLogin}>
-            <Text>Já possuo uma conta</Text>
+            <Text style={styles.txtg}>Já possuo uma conta</Text>
           </Pressable>
         </View>
       )}
@@ -188,9 +187,15 @@ export default function LoginScreen() {
           >
             <Text style={styles.txtW}>ENTRAR</Text>
           </Pressable>
+          <Pressable   
+          onPress={suporteSite}>
+            <Text style={styles.txtg}>Esqueci a senha</Text>
+
+          </Pressable>
         </View>
       )}
       {id && (
+        
         <View style={styles.planta}>
           <View style={styles.separator} />
 
@@ -215,11 +220,7 @@ export default function LoginScreen() {
             <Text>SAIR</Text>
           </Pressable>
 
-          <View style={styles.separatorL} />
-
           <DataArduino />
-
-          <View style={styles.separatorL} />
 
           <Text>Código do Arduino</Text>
           <TextInput
@@ -251,9 +252,12 @@ export default function LoginScreen() {
           >
             <Text style={styles.txtW}>enviar</Text>
           </Pressable>
+          
+      <View style={styles.separator} />
+      <View style={styles.separator} />
+      <View style={styles.separator} />
         </View>
       )}
-
       <View style={styles.separator} />
     </View>
   );

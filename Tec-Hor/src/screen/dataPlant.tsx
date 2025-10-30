@@ -13,7 +13,6 @@ import * as Clipboard from 'expo-clipboard';
 import { styles } from '@/src/style/style';
 import { useId } from '../services/zustand/UserIdZustand';
 
-// Tipagem da planta
 interface Planta {
   id: number;
   usuario_id: number;

@@ -31,6 +31,8 @@ export const styles = StyleSheet.create({
   },
   txtW:{
     color: "white"
+  }, txtg:{
+    color: "green"
   },
   planta: {
     backgroundColor: "white",
@@ -55,6 +57,17 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 20,
+    alignItems: 'center',
+    
+  },
+    dataPlanta1: {
+    backgroundColor: "white",
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: "green",
+    borderColor: "green",
+    borderWidth: 1,
+    borderRadius: 10,
     alignItems: 'center',
     
   },
