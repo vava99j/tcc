@@ -22,7 +22,7 @@ O **Tec-Hor** tem como proposta desenvolver um sistema inteligente para auxiliar
 
 ## 🛠️ Tecnologias utilizadas
 
-- ⚛️ **React** → Interface intuitiva e interativa  
+- ⚛️ **React-Native** → Interface intuitiva e interativa  
 - 🟩 **Node.js** → Back-end para comunicação e integração com o banco de dados  
 - 📜 **JavaScript** → Linguagem principal do projeto  
 - 🤖 **Arduino** → Automação e coleta de dados físicos  
