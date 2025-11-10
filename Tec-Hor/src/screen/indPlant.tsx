@@ -21,50 +21,92 @@ export default function PlantIdentifierScreen() {
   const API_URL = 'https://servidor-632w.onrender.com';
 
   const [image, setImage] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
-  const [cuidados, setCuidados] = useState<any>(null);
+  const [cuidados, setCuidados] = useState<string | null>(null);
 
   const hor = useStore((state) => state.hor);
   const fot = useFot((state) => state.foto);
+  const setFoto = useFot((state) => state.setFoto);
   const idUser = useId((state) => state.id);
-  const { setFoto } = useFot.getState();
 
   const escolherImagem = async () => {
+    // pedir permissão
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permissão necessária', 'Permita o acesso à galeria para escolher uma imagem.');
+      return;
+    }
+
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       base64: true,
       quality: 0.7,
     });
 
-    if (!pickerResult.canceled) {
-      const base64 = pickerResult.assets[0].base64;
-      const uri = pickerResult.assets[0].uri;
+    if (pickerResult.canceled) return;
 
-      setImage(uri);
-      setFoto(`data:image/jpeg;base64,${base64}`);
-      setLoading(true);
-      setResult(null);
-      setCuidados(null);
+    const asset = pickerResult.assets?.[0];
+    if (!asset) {
+      Alert.alert('Erro', 'Nenhuma imagem selecionada.');
+      return;
+    }
 
-      try {
-        const resposta = await identificarPlanta(base64!);
-        setResult(resposta);
+    const base64 = asset.base64 ?? null;
+    const uri = asset.uri ?? null;
 
-        const nomeCientifico = resposta?.suggestions?.[0]?.plant_name;
-        console.log('Planta identificada:', nomeCientifico);
+    if (!base64 || !uri) {
+      Alert.alert('Erro', 'Não foi possível obter a imagem ou o base64.');
+      return;
+    }
 
-        const { respostagen } = await gemini(nomeCientifico);
-        setCuidados(respostagen);
-      } catch (error) {
-        Alert.alert('Erro', 'Erro ao identificar a planta ou buscar cuidados.');
-        console.log(error);
-      } finally {
-        setLoading(false);
+    // setar estados iniciais
+    setImage(uri);
+    setFoto(`data:image/jpeg;base64,${base64}`);
+    setLoading(true);
+    setResult(null);
+    setCuidados(null);
+
+    try {
+      const resposta = await identificarPlanta(base64);
+      setResult(resposta);
+
+      const nomeCientifico = resposta?.suggestions?.[0]?.plant_name;
+      console.log('Planta identificada:', nomeCientifico);
+
+      if (nomeCientifico) {
+        try {
+          const { respostagen } = await gemini(nomeCientifico);
+          setCuidados(respostagen ?? null);
+        } catch (errGen) {
+          console.error('Erro no Gemini:', errGen);
+          Alert.alert('Aviso', 'Planta identificada, mas falha ao obter cuidados (IA).');
+          setCuidados(null);
+        }
+      } else {
+        Alert.alert('Aviso', 'Planta identificada, mas sem nome científico retornado.');
       }
+    } catch (err) {
+      console.error('Erro identificarPlanta:', err);
+      Alert.alert('Erro', 'Erro ao identificar a planta.');
+    } finally {
+      setLoading(false);
     }
   };
 
   async function handleCadPlant() {
+    if (!idUser) {
+      Alert.alert('Erro', 'Usuário não autenticado.');
+      return;
+    }
+    if (!hor) {
+      Alert.alert('Erro', 'Horários ausentes.');
+      return;
+    }
+    if (!fot) {
+      Alert.alert('Erro', 'Foto ausente.');
+      return;
+    }
+
     try {
       const res = await fetch(`${API_URL}/plantas`, {
         method: 'POST',
@@ -81,34 +123,27 @@ export default function PlantIdentifierScreen() {
       Alert.alert('Sucesso', 'Planta cadastrada com sucesso!');
       navigateToHome();
 
-      setCuidados('');
-      setResult('');
+      // reset seguro para tipos coerentes
+      setCuidados(null);
+      setResult(null);
       setFoto('');
-      setImage('');
+      setImage(null);
     } catch (err) {
       console.error(err);
       Alert.alert('Erro', 'Não foi possível cadastrar a planta');
     }
   }
 
+  const canSave =
+    !!idUser &&
+    !!hor &&
+    !!fot &&
+    cuidados != null &&
+    result != null;
+
   return (
     <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white' }}>
       <Pressable
-        onPress={escolherImagem}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? '#b0dca8' : 'green',
-            paddingVertical: 10,
-            paddingHorizontal: 15,
-            borderRadius: 8,
-            alignItems: 'center',
-            marginTop: 10,
-          },
-        ]}
-      >
-        <Text style={styles.txtW}>ESCOLHER IMAGEM</Text>
-      </Pressable>
-          <Pressable
         onPress={escolherImagem}
         style={({ pressed }) => [
           {
@@ -128,29 +163,27 @@ export default function PlantIdentifierScreen() {
         <Image
           source={{ uri: image }}
           style={{ width: '100%', height: 200, marginVertical: 10 }}
+          resizeMode="cover"
         />
       )}
 
-      {/* Indicador de carregamento */}
-      {loading && <ActivityIndicator color="green" />}
+      {loading && <ActivityIndicator size="large" />}
 
-      {/* Resultado da identificação */}
       {result && (
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 18 }}>🌿 Planta Identificada:</Text>
-          <Text>Nome científico: {result.suggestions[0].plant_name}</Text>
+          <Text>Nome científico: {result.suggestions?.[0]?.plant_name ?? '—'}</Text>
         </View>
       )}
 
-      {/* Cuidados com a planta */}
       {cuidados && (
         <View style={{ marginTop: 20 }}>
-          <Text>Cuidados: {cuidados}</Text>
+          <Text style={{ fontWeight: 'bold' }}>Cuidados:</Text>
+          <Text>{cuidados}</Text>
         </View>
       )}
 
-      {/* Botão de salvar planta */}
-      {idUser && hor && fot && cuidados && result && (
+      {canSave && (
         <Pressable
           onPress={handleCadPlant}
           style={({ pressed }) => [

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "bw": "npm run i && npm run web",
+    "bw": "npm i && npm run web",
     "web": "expo start --web",
     "grok-web": "expo start --tunnel --web",
     "start": "expo start"
