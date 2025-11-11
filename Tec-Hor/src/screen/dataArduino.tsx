@@ -9,53 +9,46 @@ import {
 import axios from 'axios';
 import { styles } from '@/src/style/style';
 import { useId } from '../services/zustand/UserIdZustand';
+import { getByUser } from '../api/bd';
 
 
-interface Planta {
+interface Arduino {
   id: number;
   usuario_id: number;
   cod_ard: string;
   umd: string
 }
 
-const API_BASE = 'https://servidor-632w.onrender.com/arduino';
-
 const ArduinoList = () => {
-  const [arduinos, setArduinos] = useState<Planta[]>([]);
+  const [arduinos, setArduinos] = useState<Arduino[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const idUser = useId((state) => state.id);
 
   useEffect(() => {
-    async function fetchArduino() {
-      try {
-        const response = await axios.get<Planta[]>(`${API_BASE}/${idUser}`);
-        const data = response.data;
-        const arr = Array.isArray(data) ? data : [data];
-        setArduinos(arr);
-      } catch (error) {
-        console.error('Erro ao buscar arduinos:', error);
-      } finally {
-        setLoading(false);
+      let ignore = false;
+  
+      async function load() {
+        try {
+          const data = await getByUser<Arduino>(idUser, "arduino");
+          if (!ignore) {
+            setArduinos(data);
+          }
+        } catch (err) {
+          if (!ignore) {
+            Alert.alert('Erro', 'Não foi possível carregar as plantas.');
+          }
+        } finally {
+          if (!ignore) setLoading(false);
+        }
       }
-    }
+  
+      load();
+      return () => {
+        ignore = true;
+      };
+    }, [idUser]);
 
-    fetchArduino();
-  }, [idUser]);
-
-  const handleDelete = async (id: number) => {
-    if (deletingId !== null) return;
-
-    try {
-      setDeletingId(id);
-
-    } catch (err) {
-      console.error('Erro ao deletar planta:', err);
-      Alert.alert('Erro', 'Não foi possível deletar a Estufa. Tente novamente.');
-    } finally {
-      setDeletingId(null);
-    }
-  };
 
   if (loading) {
     return (

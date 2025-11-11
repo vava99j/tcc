@@ -10,10 +10,14 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import * as Clipboard from 'expo-clipboard';
-import { styles } from '@/src/style/style';
-import { useId } from '../services/zustand/UserIdZustand';
 
-interface Planta {
+import { styles } from '@/src/style/style';
+
+import { useId } from '../services/zustand/UserIdZustand';
+import { getByUser } from '@/src/api/bd';
+
+
+ interface Planta {
   id: number;
   usuario_id: number;
   horarios: string;
@@ -21,30 +25,34 @@ interface Planta {
   nomepl: string;
 }
 
-const API_BASE = 'https://servidor-632w.onrender.com/plantas';
-
 const PlantList = () => {
   const [plantas, setPlantas] = useState<Planta[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
-  const idUser = useId((state) => state.id);
+const idUser = useId((state) => state.id);
 
-  // Buscar plantas do usuário
   useEffect(() => {
-    async function fetchPlantas() {
+    let ignore = false;
+
+    async function load() {
       try {
-        const response = await axios.get<Planta[]>(`${API_BASE}/${idUser}`);
-        const data = response.data;
-        const arr = Array.isArray(data) ? data : [data];
-        setPlantas(arr);
-      } catch (error) {
-        console.error('Erro ao buscar plantas:', error);
+        const data = await getByUser<Planta>(idUser, "plantas");
+        if (!ignore) {
+          setPlantas(data);
+        }
+      } catch (err) {
+        if (!ignore) {
+          Alert.alert('Erro', 'Não foi possível carregar as plantas.');
+        }
       } finally {
-        setLoading(false);
+        if (!ignore) setLoading(false);
       }
     }
 
-    fetchPlantas();
+    load();
+    return () => {
+      ignore = true;
+    };
   }, [idUser]);
 
   // Deletar planta
@@ -53,7 +61,9 @@ const PlantList = () => {
 
     try {
       setDeletingId(id);
-      await axios.delete(`${API_BASE}/${id}`);
+      // delete usando API principal
+      await axios.delete(`https://servidor-632w.onrender.com/plantas/${id}`);
+
       setPlantas((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
       console.error('Erro ao deletar planta:', err);
@@ -83,7 +93,7 @@ const PlantList = () => {
     );
   }
 
-  // Render da lista de plantas
+  // Render da lista
   return (
     <FlatList
       data={plantas}
@@ -92,7 +102,8 @@ const PlantList = () => {
       ListFooterComponent={() => <View style={{ height: 30 }} />}
       renderItem={({ item }) => (
         <View style={styles.dataPlanta}>
-          {/* Botão de copiar horários */}
+
+          {/* Botão copiar */}
           <Pressable
             onPress={() => handleCopy(item.horarios)}
             style={({ pressed }) => [
@@ -110,15 +121,17 @@ const PlantList = () => {
             <Text style={styles.txtW}>Copiar Horários</Text>
           </Pressable>
 
-          {/* Imagem da planta */}
-          {item.foto_url && (
+          {/* Imagem */}
+          {item.foto_url ? (
             <Image source={{ uri: item.foto_url }} style={styles.image} />
+          ) : (
+            <Text style={styles.txtW}>Sem foto</Text>
           )}
 
-          {/* Texto com os horários */}
+          {/* Texto com horário */}
           <Text style={styles.txt}>{item.horarios}</Text>
 
-          {/* Botão de deletar */}
+          {/* Botão deletar */}
           <Pressable
             onPress={() => handleDelete(item.id)}
             style={({ pressed }) => [

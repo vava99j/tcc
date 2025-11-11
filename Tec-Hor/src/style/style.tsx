@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     alignItems: 'center',
-    
+    padding: 10,
   },
   separator: {
     marginVertical: 30,
