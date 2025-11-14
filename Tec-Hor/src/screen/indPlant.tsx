@@ -15,10 +15,10 @@ import { gemini } from '@/src/api/gemini';
 import { useFot } from '../services/zustand/FotZustand';
 import { useStore } from '../services/zustand/HorZustand';
 import { useId } from '../services/zustand/UserIdZustand';
-import { navigateToHome } from '@/app/login';
+import axios from 'axios';
 
 export default function PlantIdentifierScreen() {
-  const API_URL = 'https://servidor-632w.onrender.com';
+  const API_URL = 'https://tec-hor.vercel.app';
 
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
@@ -64,51 +64,39 @@ export default function PlantIdentifierScreen() {
     }
   };
 
+
+
   async function handleCadPlant() {
+    console.log("Enviando dados:", { usuario_id: idUser, horarios: hor, foto_url: fot });
+
+   if (!idUser || !hor || !fot) {
+      Alert.alert('Erro', 'Faltam dados obrigatórios');
+      return;
+    }
+
     try {
-      const res = await fetch(`${API_URL}/plantas`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          usuario_id: idUser,
-          horarios: hor,
-          foto_url: fot,
-        }),
+      const res = await axios.post(`${API_URL}/pplanta`, {
+        usuario_id: idUser,
+        horarios: hor,
+        foto_url: fot,
       });
 
-      if (!res.ok) throw new Error('Erro ao cadastrar a planta');
+      if (res.status !== 201 && res.status !== 200) {
+        throw new Error("Erro ao cadastrar usuário");
+      }
 
-      Alert.alert('Sucesso', 'Planta cadastrada com sucesso!');
-      navigateToHome();
-
-      setCuidados('');
-      setResult('');
+      setCuidados(null);
+      setResult(null);
       setFoto('');
-      setImage('');
+      setImage(null);
     } catch (err) {
-      console.error(err);
-      Alert.alert('Erro', 'Não foi possível cadastrar a planta');
+      Alert.alert("Erro", "Não foi possível cadastrar o usuário");
     }
   }
 
   return (
     <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white' }}>
       <Pressable
-        onPress={escolherImagem}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? '#b0dca8' : 'green',
-            paddingVertical: 10,
-            paddingHorizontal: 15,
-            borderRadius: 8,
-            alignItems: 'center',
-            marginTop: 10,
-          },
-        ]}
-      >
-        <Text style={styles.txtW}>ESCOLHER IMAGEM</Text>
-      </Pressable>
-          <Pressable
         onPress={escolherImagem}
         style={({ pressed }) => [
           {

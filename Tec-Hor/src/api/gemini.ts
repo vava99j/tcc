@@ -1,11 +1,10 @@
 
 import { GoogleGenAI } from "@google/genai";
-import dividir from "../services/dividir";
-import dataPlant from "../screen/dataPlant";
+import dividir from "../services/dividir";;
 
 
 // Access the API key from an environment variable for security
-const ai = new GoogleGenAI({ apiKey: "AIzaSyC13-qfSfflpU7dkXu4EnuAurX_xQAcLE4"  });
+const ai = new GoogleGenAI({ apiKey: "AIzaSyCHVkLTGhN7S72JbTKF3dm2Oe30k02wYNQ"  });
 
 export async function gemini(input: string) {
   const response = await ai.models.generateContent({
