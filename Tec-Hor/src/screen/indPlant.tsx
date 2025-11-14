@@ -18,7 +18,7 @@ import { useId } from '../services/zustand/UserIdZustand';
 import axios from 'axios';
 
 export default function PlantIdentifierScreen() {
-  const API_URL = 'https://tec-hor.vercel.app';
+  const API_URL = 'https://servidor-632w.onrender.com';
 
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
