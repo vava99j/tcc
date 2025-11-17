@@ -120,10 +120,15 @@ export default function PlantIdentifierScreen() {
       setResult(null);
       setFoto('');
       setImage(null);
-    } catch (err) {
-      console.error(err);
-      Alert.alert('Erro', 'Não foi possível cadastrar a planta');
-    }
+} catch (err) {
+  if (axios.isAxiosError(err) && err.response?.status === 500) {
+    return; // Ignora erro 500
+  }
+
+  console.error(err);
+  Alert.alert('Erro', 'Não foi possível cadastrar a planta');
+}
+
   }
 
   const canSave =
