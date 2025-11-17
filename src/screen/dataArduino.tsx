@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import axios from 'axios';
 import { styles } from '@/src/style/style';
 import { useId } from '../services/zustand/UserIdZustand';
 import { getByUser } from '../api/bd';
@@ -22,7 +21,6 @@ interface Arduino {
 const ArduinoList = () => {
   const [arduinos, setArduinos] = useState<Arduino[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [deletingId, setDeletingId] = useState<number | null>(null);
   const idUser = useId((state) => state.id);
 
   useEffect(() => {

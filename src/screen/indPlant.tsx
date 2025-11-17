@@ -16,6 +16,7 @@ import { useFot } from '../services/zustand/FotZustand';
 import { useStore } from '../services/zustand/HorZustand';
 import { useId } from '../services/zustand/UserIdZustand';
 import { navigateToHome } from '@/app/login';
+import axios from 'axios';
 
 export default function PlantIdentifierScreen() {
   const API_URL = 'https://servidor-632w.onrender.com';
@@ -31,7 +32,6 @@ export default function PlantIdentifierScreen() {
   const idUser = useId((state) => state.id);
 
   const escolherImagem = async () => {
-    // pedir permissão
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
       Alert.alert('Permissão necessária', 'Permita o acesso à galeria para escolher uma imagem.');
@@ -58,8 +58,6 @@ export default function PlantIdentifierScreen() {
       Alert.alert('Erro', 'Não foi possível obter a imagem ou o base64.');
       return;
     }
-
-    // setar estados iniciais
     setImage(uri);
     setFoto(`data:image/jpeg;base64,${base64}`);
     setLoading(true);
@@ -69,7 +67,6 @@ export default function PlantIdentifierScreen() {
     try {
       const resposta = await identificarPlanta(base64);
       setResult(resposta);
-
       const nomeCientifico = resposta?.suggestions?.[0]?.plant_name;
       console.log('Planta identificada:', nomeCientifico);
 
@@ -85,6 +82,7 @@ export default function PlantIdentifierScreen() {
       } else {
         Alert.alert('Aviso', 'Planta identificada, mas sem nome científico retornado.');
       }
+
     } catch (err) {
       console.error('Erro identificarPlanta:', err);
       Alert.alert('Erro', 'Erro ao identificar a planta.');
@@ -108,22 +106,16 @@ export default function PlantIdentifierScreen() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/plantas`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          usuario_id: idUser,
-          horarios: hor,
-          foto_url: fot,
-        }),
+      const response = await axios.post(`${API_URL}/pplanta`, {
+        usuario_id: idUser,
+        horarios: hor,
+        foto_url: fot,
       });
 
-      if (!res.ok) throw new Error('Erro ao cadastrar a planta');
 
       Alert.alert('Sucesso', 'Planta cadastrada com sucesso!');
       navigateToHome();
 
-      // reset seguro para tipos coerentes
       setCuidados(null);
       setResult(null);
       setFoto('');
