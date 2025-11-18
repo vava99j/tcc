@@ -9,7 +9,7 @@ import DataArduino from '../src/screen/dataArduino';
 
 const API_URL = "https://servidor-632w.onrender.com";
 
-export function navigateToHome() {
+function navigateToHome() {
   const router = useRouter();
   router.push("/(tabs)");
 }
@@ -25,7 +25,11 @@ export default function LoginScreen() {
   const [entrarSenha, setEntrarSenha] = useState("");
   const [horarios, setHorarios] = useState("");
   const { id, setId } = useId();
+  const router = useRouter();
 
+  function navigateToHome() {
+    router.push("/(tabs)");
+  }
   async function handleCadastro() {
     if (!criartelefone || !criarsenha) {
       Alert.alert("Erro", "Preencha todos os campos");
@@ -102,7 +106,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.containerL}>
       <View style={styles.separatorL} />
-      
+
       <TouchableOpacity onPress={navigateToHome}>
         <Text>◀ Voltar</Text>
       </TouchableOpacity>
@@ -187,15 +191,15 @@ export default function LoginScreen() {
           >
             <Text style={styles.txtW}>ENTRAR</Text>
           </Pressable>
-          <Pressable   
-          onPress={suporteSite}>
+          <Pressable
+            onPress={suporteSite}>
             <Text style={styles.txtg}>Esqueci a senha</Text>
 
           </Pressable>
         </View>
       )}
       {id && (
-        
+
         <View style={styles.planta}>
           <View style={styles.separator} />
 
@@ -252,10 +256,10 @@ export default function LoginScreen() {
           >
             <Text style={styles.txtW}>enviar</Text>
           </Pressable>
-          
-      <View style={styles.separator} />
-      <View style={styles.separator} />
-      <View style={styles.separator} />
+
+          <View style={styles.separator} />
+          <View style={styles.separator} />
+          <View style={styles.separator} />
         </View>
       )}
       <View style={styles.separator} />

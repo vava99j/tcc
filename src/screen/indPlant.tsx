@@ -122,7 +122,7 @@ export default function PlantIdentifierScreen() {
       setImage(null);
 } catch (err) {
   if (axios.isAxiosError(err) && err.response?.status === 500) {
-    return; // Ignora erro 500
+    return;
   }
 
   console.error(err);
