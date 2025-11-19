@@ -14,16 +14,16 @@ export default function ModalScreen() {
              <Text style={styles.title2}> {'\n'}Planta</Text>  <Text style={styles.title2}> {'\n'}Semente</Text>
           </View>
           <View style={styles.row}>     <Text style={styles.txt}>
-            1. Abra a câmera nativa do seu celular e tire uma fotografia da planta que deseja monitorar.
+            1. Abra a câmera nativa do seu celular e tire uma fotografia da planta que deseja monitorar;
           </Text>
           <Text style={styles.txt}>
-            1. Abra o navegador e pesquise o nome científico ou popular da planta salve a imagem ou tire um print.
+            1. Abra o navegador e pesquise o nome científico ou popular da planta salve a imagem ou tire um print;
           </Text>
           </View>
           <Text style={styles.txt}>
-            {'\n'}2. Em seguida, acesse o aplicativo Tec-Hor e entre na aba Uploader.
-            {'\n'}3. Toque no botão “Escolher Imagem” e selecione a foto tirada da planta.
-            {'\n'}4. Conecte o seu celular à entrada USB do sistema Tec-Hor.
+            {'\n'}2. Em seguida, acesse o aplicativo Tec-Hor e entre na aba Uploader;
+            {'\n'}3. Toque no botão “Escolher Imagem” e selecione a foto tirada da planta;
+            {'\n'}4. Copie os horarios da sua planta cadastrada e na aba de login insira o codigo da sua estufa e os horários;
             {'\n'}5. Pronto! Sua estufa estará automatizada e os dados coletados auxiliarão no controle inteligente das plantas.
           </Text>
 

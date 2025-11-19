@@ -38,10 +38,6 @@ export async function getByUser<t>(idUser: string, subDom: string): Promise<t[]>
 }
 
 
-
-  const { key1, setKey1} = useKey1();
-  const { key2, setKey2} = useKey2();
-
 export async function getApi(id: string): Promise<string> {
   async function fetchApi(url: string): Promise<string> {
     const response = await axios.get<ApiKeyResponse[]>(`${url}/API/${id}`);
@@ -49,10 +45,8 @@ export async function getApi(id: string): Promise<string> {
     if (!data || data.length === 0) {
       throw new Error("Resposta vazia da API");
     }
-
     return data[0].key_api;
   }
-
   try {
     return await fetchApi(API_BASE);
   } catch (err) {

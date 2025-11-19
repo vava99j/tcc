@@ -7,7 +7,6 @@ import { carregarKeys } from "./bd";
 
 
 export async function gemini(input: string) {
-   carregarKeys();
    const { key1 } = useKey1.getState()
   if (!key1) {
     throw new Error("API KEY 1 ainda não carregada");

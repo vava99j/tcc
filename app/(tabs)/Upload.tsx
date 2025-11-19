@@ -11,23 +11,23 @@ import { useEffect } from 'react';
     router.push("/login");
   }
 export default function TabTwoScreen() {
- 
-useEffect(() => {
-  async function load() {
-    await carregarKeys();
-  }
-  load();
-}, []);
+  const router = useRouter();
+  const idUser = useId((state) => state.id);
 
+  useEffect(() => {
+    carregarKeys();
+  }, []);
 
-  const idUser = useId((state) => state.id) 
-    if(!idUser){
-      }
+  useEffect(() => {
+    if (!idUser) router.push("/login");
+  }, [idUser]);
+
   return (
     <View style={styles.container}> 
-      <Text style={styles.title}> Uploader</Text>
-      {idUser && <View style={styles.planta}> <IndPlant/> </View>}
+      <Text style={styles.title}>Uploader</Text>
+      {idUser && <View style={styles.planta}><IndPlant/></View>}
     </View>
   );
 }
+
 

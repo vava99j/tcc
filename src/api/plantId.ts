@@ -3,7 +3,6 @@ import { useKey2} from '../services/zustand/key';
 import { carregarKeys } from "./bd";
 
 export async function identificarPlanta(base64Image: string) {
-   carregarKeys();
  const { key2 } = useKey2.getState();
 
   if (!key2) {
