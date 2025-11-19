@@ -1,8 +1,8 @@
 import { Linking } from "react-native";
 export function suporteSite() {
-    Linking.openURL('https://ginette-superdivine-samir.ngrok-free.dev/contato');
+    Linking.openURL('https://tec-hor.vercel.app/contato');
   }
 
 export function abrirSite() {
-    Linking.openURL('https://ginette-superdivine-samir.ngrok-free.dev/home');
+    Linking.openURL('https://tec-hor.vercel.app/home');
   ;}

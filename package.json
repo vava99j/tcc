@@ -4,10 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "bw": "npm i && npm run web",
+    "bw": "npm i && npm run start",
     "lint": "expo lint",
     "grok-web": "expo start --tunnel --web",
-    "start": "expo start -c"
+    "start": "expo start -c --web",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "jest": {
     "preset": "jest-expo"

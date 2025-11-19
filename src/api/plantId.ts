@@ -1,11 +1,16 @@
 import axios from "axios";
-import { getApi } from "./bd";
-
-const BASE_URL = 'https://api.plant.id/v2/identify';
-
+import { useKey2} from '../services/zustand/key';
+import { carregarKeys } from "./bd";
 
 export async function identificarPlanta(base64Image: string) {
-const API_KEY = await getApi("2")
+   carregarKeys();
+ const { key2 } = useKey2.getState();
+
+  if (!key2) {
+    throw new Error("API KEY 2 ainda não carregada");
+  }
+const BASE_URL = 'https://api.plant.id/v2/identify';
+const API_KEY = key2
   try {
     const response = await axios.post(
       BASE_URL,

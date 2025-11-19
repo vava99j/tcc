@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
   },
   scroll:{
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    width:"100%", 
   },
   title: {
     fontSize: 35,

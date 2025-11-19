@@ -15,7 +15,7 @@ import { gemini } from '@/src/api/gemini';
 import { useFot } from '../services/zustand/FotZustand';
 import { useStore } from '../services/zustand/HorZustand';
 import { useId } from '../services/zustand/UserIdZustand';
-import { navigateToHome } from '@/app/login';
+import { navigateToHome } from '@/src/services/navigate';
 import axios from 'axios';
 
 export default function PlantIdentifierScreen() {

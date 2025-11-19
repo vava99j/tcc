@@ -2,7 +2,7 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
-
+import { useId } from '@/src/services/zustand/UserIdZustand';
 import Colors from '@/src/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
@@ -18,6 +18,7 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  const idUser = useId((state) => state.id) 
   return (
     <Tabs
       screenOptions={{
@@ -49,6 +50,7 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: ({ color }) => <TabBarIcon name="upload" color={color} />,
+          href: idUser ? "/Upload" : null,
           headerRight: () => (
             <Link href="/login" asChild>
               <Pressable>
@@ -63,7 +65,7 @@ export default function TabLayout() {
               </Pressable>
             </Link>)
         }}
-      />
+      /> 
       <Tabs.Screen
         name="Inst"
         options={{

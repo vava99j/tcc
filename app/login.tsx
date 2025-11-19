@@ -6,13 +6,11 @@ import { styles } from '@/src/style/style';
 import axios from 'axios';
 import { useId } from '../src/services/zustand/UserIdZustand';
 import DataArduino from '../src/screen/dataArduino';
+import { navigateToHome } from '@/src/services/navigate';
 
 const API_URL = "https://servidor-632w.onrender.com";
 
-function navigateToHome() {
-  const router = useRouter();
-  router.push("/(tabs)");
-}
+
 
 export default function LoginScreen() {
   const [criartelefone, setCriarTelefone] = useState("");
@@ -27,9 +25,6 @@ export default function LoginScreen() {
   const { id, setId } = useId();
   const router = useRouter();
 
-  function navigateToHome() {
-    router.push("/(tabs)");
-  }
   async function handleCadastro() {
     if (!criartelefone || !criarsenha) {
       Alert.alert("Erro", "Preencha todos os campos");
