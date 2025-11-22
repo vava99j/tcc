@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Alert, Pressable } from 'react-native';
 import { suporteSite } from '@/src/services/site';
-import { useRouter } from 'expo-router';
-import { styles } from '@/src/style/style';
+import { useThemedStyles } from '@/src/style/style';
 import axios from 'axios';
 import { useId } from '../src/services/zustand/UserIdZustand';
 import DataArduino from '../src/screen/dataArduino';
 import { navigateToHome } from '@/src/services/navigate';
-
+import { MaterialIcons } from '@expo/vector-icons';
+import BtnTH from '../src/.minecraft/btnth'
 const API_URL = "https://servidor-632w.onrender.com";
 
 
 
 export default function LoginScreen() {
+  const styles = useThemedStyles();
   const [criartelefone, setCriarTelefone] = useState("");
   const [criarsenha, setCriarSenha] = useState("");
   const [cod_ard, setCodArd] = useState("");
@@ -23,7 +24,6 @@ export default function LoginScreen() {
   const [entrarSenha, setEntrarSenha] = useState("");
   const [horarios, setHorarios] = useState("");
   const { id, setId } = useId();
-  const router = useRouter();
 
   async function handleCadastro() {
     if (!criartelefone || !criarsenha) {
@@ -103,14 +103,15 @@ export default function LoginScreen() {
       <View style={styles.separatorL} />
 
       <TouchableOpacity onPress={navigateToHome}>
-        <Text>◀ Voltar</Text>
+        <Text style={styles.txt}><MaterialIcons name="keyboard-arrow-left" />Voltar</Text>
       </TouchableOpacity>
+
       <View style={styles.separator} />
       {!id && visible && (
         <View style={styles.planta}>
           <View style={styles.separatorL} />
 
-          <Text>Telefone</Text>
+          <Text style={styles.txt}>Telefone</Text>
           <TextInput
             style={styles.input}
             keyboardType="numeric"
@@ -118,7 +119,7 @@ export default function LoginScreen() {
             onChangeText={setCriarTelefone}
           />
 
-          <Text>Senha</Text>
+          <Text style={styles.txt}>Senha</Text>
           <TextInput
             style={styles.input}
             secureTextEntry
@@ -127,22 +128,7 @@ export default function LoginScreen() {
           />
 
           <View style={styles.separatorL} />
-
-          <Pressable
-            onPress={handleCadastro}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-              },
-            ]}
-          >
-            <Text style={styles.txtW}>CRIAR CONTA</Text>
-          </Pressable>
+          <BtnTH label="CRIAR CONTA" onPress={handleCadastro} />
 
           <Pressable onPress={toGoLogin}>
             <Text style={styles.txtg}>Já possuo uma conta</Text>
@@ -152,44 +138,25 @@ export default function LoginScreen() {
       {!id && visible2 && (
         <View style={styles.planta}>
           <View style={styles.separatorL} />
-
-          <Text>Telefone</Text>
+          <Text style={styles.txt}>Telefone</Text>
           <TextInput
             style={styles.input}
             keyboardType="numeric"
             value={entrarTel}
             onChangeText={setEntrarTel}
           />
-
-          <Text>Senha</Text>
+          <Text style={styles.txt}>Senha</Text>
           <TextInput
             style={styles.input}
             secureTextEntry
             value={entrarSenha}
             onChangeText={setEntrarSenha}
           />
-
           <View style={styles.separatorL} />
-
-          <Pressable
-            onPress={handleLogin}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-              },
-            ]}
-          >
-            <Text style={styles.txtW}>ENTRAR</Text>
-          </Pressable>
+          <BtnTH label="ENTRAR" onPress={handleLogin} />
           <Pressable
             onPress={suporteSite}>
             <Text style={styles.txtg}>Esqueci a senha</Text>
-
           </Pressable>
         </View>
       )}
@@ -205,7 +172,7 @@ export default function LoginScreen() {
             }}
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? 'red' : 'white',
+                backgroundColor: pressed ? 'red' : '',
                 paddingVertical: 10,
                 paddingHorizontal: 15,
                 borderRadius: 8,
@@ -216,42 +183,23 @@ export default function LoginScreen() {
               },
             ]}
           >
-            <Text>SAIR</Text>
+            <Text style={styles.txt}>encerrar sessão</Text>
           </Pressable>
-
           <DataArduino />
-
-          <Text>Código do Arduino</Text>
+          <Text style={styles.txt}>{'\n'}Código do Arduino</Text>
           <TextInput
             style={styles.input}
             value={cod_ard}
             onChangeText={setCodArd}
           />
-
-          <Text>Horários Planta</Text>
+          <Text style={styles.txt} >Horários Planta</Text>
           <TextInput
             style={styles.input}
             secureTextEntry
             value={horarios}
             onChangeText={setHorarios}
           />
-
-          <Pressable
-            onPress={handleArd}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-              },
-            ]}
-          >
-            <Text style={styles.txtW}>enviar</Text>
-          </Pressable>
-
+          <BtnTH label="ENVIAR" onPress={handleArd} />
           <View style={styles.separator} />
           <View style={styles.separator} />
           <View style={styles.separator} />

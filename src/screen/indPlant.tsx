@@ -5,11 +5,11 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
-  Pressable,
   Alert,
+  useColorScheme,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { styles } from '@/src/style/style';
+import {useThemedStyles } from '@/src/style/style';
 import { identificarPlanta } from '../api/plantId';
 import { gemini } from '@/src/api/gemini';
 import { useFot } from '../services/zustand/FotZustand';
@@ -17,8 +17,12 @@ import { useStore } from '../services/zustand/HorZustand';
 import { useId } from '../services/zustand/UserIdZustand';
 import { navigateToHome } from '@/src/services/navigate';
 import axios from 'axios';
+import BtnTH from '../.minecraft/btnth';
+import Colors from "../constants/Colors";
+
 
 export default function PlantIdentifierScreen() {
+  const styles = useThemedStyles();
   const API_URL = 'https://servidor-632w.onrender.com';
 
   const [image, setImage] = useState<string | null>(null);
@@ -138,24 +142,11 @@ export default function PlantIdentifierScreen() {
     cuidados != null &&
     result != null;
 
+  const colorScheme = useColorScheme();
+  const theme = colorScheme ?? "light";
   return (
-    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white' }}>
-      <Pressable
-        onPress={escolherImagem}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? '#b0dca8' : 'green',
-            paddingVertical: 10,
-            paddingHorizontal: 15,
-            borderRadius: 8,
-            alignItems: 'center',
-            marginTop: 10,
-          },
-        ]}
-      >
-        <Text style={styles.txtW}>ESCOLHER IMAGEM</Text>
-      </Pressable>
-
+    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor:Colors[theme].background}}>
+          <BtnTH label="ESCOLHER IMAGEM" onPress={escolherImagem}/>
       {image && (
         <Image
           source={{ uri: image }}
@@ -181,22 +172,9 @@ export default function PlantIdentifierScreen() {
       )}
 
       {canSave && (
-        <Pressable
-          onPress={handleCadPlant}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? '#b0dca8' : 'green',
-              paddingVertical: 10,
-              paddingHorizontal: 15,
-              borderRadius: 8,
-              alignItems: 'center',
-              marginTop: 10,
-            },
-          ]}
-        >
-          <Text style={styles.txtW}>SALVAR PLANTA</Text>
-        </Pressable>
+       <BtnTH label="SALVAR PLANTA" onPress={handleCadPlant}/>
       )}
+      
     </ScrollView>
   );
 }

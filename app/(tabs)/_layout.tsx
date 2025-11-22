@@ -17,6 +17,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const theme = colorScheme ?? "dark";
 
   const idUser = useId((state) => state.id) 
   return (
@@ -78,7 +79,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="user"
                     size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={Colors[theme].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}    
                     />
                 )}

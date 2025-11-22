@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { styles } from '@/src/style/style';
+import {useThemedStyles} from '@/src/style/style';
 import { useId } from '../services/zustand/UserIdZustand';
 import { getByUser } from '../api/bd';
 
@@ -22,6 +22,7 @@ const ArduinoList = () => {
   const [arduinos, setArduinos] = useState<Arduino[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const idUser = useId((state) => state.id);
+  const styles = useThemedStyles();
 
   useEffect(() => {
       let ignore = false;
@@ -50,6 +51,7 @@ const ArduinoList = () => {
 
   if (loading) {
     return (
+
       <View style={styles.loader}>
         <ActivityIndicator color="green" />
         <Text>Carregando Estufa/s...</Text>
@@ -61,17 +63,12 @@ const ArduinoList = () => {
     <FlatList
       data={arduinos}
       keyExtractor={(item) => item.id.toString()}
-      ListHeaderComponent={() => <View style={{ padding: 10 }} />}
+      ListHeaderComponent={() => <View style={{ margin: 0 }} />}
       ListFooterComponent={() => <View style={{ height: 'auto' }} />}
       renderItem={({ item }) => (
         <View style={styles.dataPlanta1}>
-          <View style={styles.row}>
-            <Text>Cod. Estufa:</Text><Text style={styles.txtg}> {item.cod_ard}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text>Cod. Estufa:</Text><Text style={styles.txtg}> {item.umd}</Text>
-          </View>
-
+            <Text style={styles.txtg}>Cod. Estufa:{item.cod_ard}</Text>
+            <Text style={styles.txtg}>Cod. Estufa:{item.umd}</Text> 
         </View>
       )}
     />

@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Text, View, ScrollView } from 'react-native';
-import { styles } from '@/src/style/style';
+import { useThemedStyles } from '@/src/style/style';
 
 export default function ModalScreen() {
+  const styles = useThemedStyles();
   return (
     <View style={styles.container}>
          <Text style={styles.title}>Instruções</Text>

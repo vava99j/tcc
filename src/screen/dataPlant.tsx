@@ -5,19 +5,18 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
-  Pressable,
   Alert,
 } from 'react-native';
 import axios from 'axios';
 import * as Clipboard from 'expo-clipboard';
-
-import { styles } from '@/src/style/style';
-
+import {useThemedStyles } from '@/src/style/style';
 import { useId } from '../services/zustand/UserIdZustand';
 import { getByUser } from '@/src/api/bd';
+import BtnTH from '../.minecraft/btnth';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
- interface Planta {
+interface Planta {
   id: number;
   usuario_id: number;
   horarios: string;
@@ -26,10 +25,11 @@ import { getByUser } from '@/src/api/bd';
 }
 
 const PlantList = () => {
+  const styles = useThemedStyles();
   const [plantas, setPlantas] = useState<Planta[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
-const idUser = useId((state) => state.id);
+  const idUser = useId((state) => state.id);
 
   useEffect(() => {
     let ignore = false;
@@ -55,25 +55,26 @@ const idUser = useId((state) => state.id);
     };
   }, [idUser]);
 
-  // Deletar planta
   const handleDelete = async (id: number) => {
     if (deletingId !== null) return;
 
     try {
       setDeletingId(id);
-      // delete usando API principal
       await axios.delete(`https://servidor-632w.onrender.com/plantas/${id}`);
-
       setPlantas((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
-      console.error('Erro ao deletar planta:', err);
-      Alert.alert('Erro', 'Não foi possível deletar a planta. Tente novamente.');
+      try {
+        setDeletingId(id);
+        await axios.delete(`https://tec-hor.vercel.app/plantas/${id}`);
+        setPlantas((prev) => prev.filter((p) => p.id !== id));
+      } catch (err) {
+        console.error('Erro ao deletar planta:', err);
+        Alert.alert('Erro', 'Não foi possível deletar a planta. Tente novamente.');;
+      }
     } finally {
       setDeletingId(null);
     }
   };
-
-  // Copiar horários para a área de transferência
   const handleCopy = async (text: string) => {
     try {
       await Clipboard.setStringAsync(text);
@@ -83,7 +84,6 @@ const idUser = useId((state) => state.id);
     }
   };
 
-  // Tela de carregamento
   if (loading) {
     return (
       <View style={styles.loader}>
@@ -93,7 +93,6 @@ const idUser = useId((state) => state.id);
     );
   }
 
-  // Render da lista
   return (
     <FlatList
       data={plantas}
@@ -102,56 +101,23 @@ const idUser = useId((state) => state.id);
       ListFooterComponent={() => <View style={{ height: 30 }} />}
       renderItem={({ item }) => (
         <View style={styles.dataPlanta}>
+          <View style={styles.row}>
+            <BtnTH icon={<MaterialIcons name="content-copy" size={24} color="white" />
+            } onPress={() => handleCopy(item.horarios)} />
 
-          {/* Botão copiar */}
-          <Pressable
-            onPress={() => handleCopy(item.horarios)}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-                marginVertical: 2,
-              },
-            ]}
-          >
-            <Text style={styles.txtW}>Copiar Horários</Text>
-          </Pressable>
+            <BtnTH icon={<MaterialIcons name="delete" size={24} color="red" />
+            } onPress={() => handleDelete(item.id)} />
+          </View>
 
-          {/* Imagem */}
           {item.foto_url ? (
             <Image source={{ uri: item.foto_url }} style={styles.image} />
           ) : (
-            <Text style={styles.txtW}>Sem foto</Text>
+            <Text style={styles.txt}>Sem foto</Text>
           )}
+          <View style={{
+            padding: 7
+          }}>   <Text style={styles.txt}>{item.horarios}</Text></View>
 
-          {/* Texto com horário */}
-          <Text style={styles.txt}>{item.horarios}</Text>
-
-          {/* Botão deletar */}
-          <Pressable
-            onPress={() => handleDelete(item.id)}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? '#b0dca8' : 'green',
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 8,
-                alignItems: 'center',
-                marginTop: 10,
-              },
-            ]}
-            disabled={deletingId === item.id}
-          >
-            {deletingId === item.id ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={styles.txtW}>DELETAR PLANTA</Text>
-            )}
-          </Pressable>
         </View>
       )}
     />

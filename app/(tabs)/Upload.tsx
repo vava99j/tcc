@@ -1,4 +1,4 @@
-import { styles } from '@/src/style/style';
+import {useThemedStyles } from '@/src/style/style';
 import { Text, View } from '@/components/Themed';
 import  IndPlant  from '../../src/screen/indPlant';
 import { useId } from '@/src/services/zustand/UserIdZustand'
@@ -11,6 +11,7 @@ import { useEffect } from 'react';
     router.push("/login");
   }
 export default function TabTwoScreen() {
+   const styles = useThemedStyles();
   const router = useRouter();
   const idUser = useId((state) => state.id);
 
